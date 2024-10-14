@@ -21,19 +21,19 @@ int main() {
     for (int i = 1; i <= N; i++) {
         cin >> a[i] >> b[i];  
     }
-    for (int i = 0; i <= N; i++) {
-        for (int j = 0; j <= M; j++) {
+    for (int i = 1; i <= N; i++) {
+        for (int j = 1; j <= M; j++) {
             dp[i][j] = 0;
         }
     }
 
 
-    for (int i = 1; i <= N; i++) {
-        for (int j = 0; j <= M; j++) {
+    for (int i =1; i <= N; i++) {
+        for (int j = 1; j <= M; j++) {
             if (b[i] <= j) {  
                 dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - b[i]] + a[i]);
             } else {
-                dp[i][j] = dp[i - 1][j]; 
+                dp[i][j] = max(dp[i][j-1], dp[i-1][j]); 
             }
         }
     }
