@@ -1,0 +1,66 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+const int max_n = 100;
+const int max_m = 100;
+
+int dp[max_n + 1][max_m + 1];
+int a[max_n + 1], b[max_n + 1];
+bool selected[max_n][max_n];
+void init(){
+    freopen("CAYKHE2.inp", "r", stdin);
+    freopen("CAYKHE2.out", "w", stdout);
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+}
+int main() {
+    init();
+    int n, m;
+    cin >> n >> m;
+
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i] >> b[i];
+    }
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            dp[i][j] = 0;
+            selected[i][j] = false;
+        }
+    }
+
+
+    for (int i = 1; i <= n; i++) {
+        for (int j = 0; j <= m; j++) {
+            if (b[i] <= j) {
+                if (dp[i - 1][j] >= dp[i - 1][j - b[i]] + a[i]) {
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    dp[i][j] = dp[i - 1][j - b[i]] + a[i];
+                    selected[i][j] = true;
+                }
+            } else {
+                 dp[i][j] = max(dp[i][j-1], dp[i-1][j]);
+            }
+        }
+    }
+    cout << dp[n][m] << endl;
+    vector<int> vec;
+    int c = m;
+    for(int i = n; i >= 1; i--){
+        if(selected[i][c] == true){
+            vec.push_back(i);
+            c -= b[i];
+        }
+    }
+    cout<<vec.size()<<" ";
+    for(int i = vec.size()-1; i>= 0; i--){
+        cout<<vec[i]<<" ";
+    }
+
+
+
+
+    return 0;
+}
