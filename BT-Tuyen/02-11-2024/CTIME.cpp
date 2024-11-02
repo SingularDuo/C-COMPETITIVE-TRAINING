@@ -20,7 +20,7 @@ int main() {
     }
     ll max_lam = 0, max_kolam = 0;
     ll current_lam = 0, current_kolam = 0;
-    for (int i = min_start; i < max_end; i++) {
+    for (int i = minn; i < maxx; i++) {
         if (luu[i] == 1) {
             current_lam++;
             max_lam = max(max_lam, current_lam);
