@@ -2,7 +2,6 @@
 using namespace std;
 #define ll long long
 #define endl "\n"
-
 int main() {
     int n;
     cin >> n;
@@ -20,7 +19,6 @@ int main() {
         }
         else continue;
     }
-
     cout << cnt << endl;
     return 0;
 }
