@@ -1,45 +1,52 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 #define ll long long
 #define endl "\n"
-int main(){
+int main() {
     int n;
-    cin>>n;
+    cin >> n;
     vector<pair<int, int>> a(n);
-    for(int i = 0; i < n; i++) cin>>a[i].first>>a[i].second;
-    vector<int> luu(1e6 +5, 0);
-    for(int i = 0; i < n; i++)
-    {
-        for(int j = a[i].first; j <= a[i].second; j++){
+    for (int i = 0; i < n; i++) cin >> a[i].first >> a[i].second;
+    int minn = INT_MAX, maxx = INT_MIN;
+    for (int i = 0; i < n; i++) {
+        minn = min(minn, a[i].first);
+        maxx = max(maxx, a[i].second);
+    }
+    vector<int> luu(maxx + 1, 0);
+    for (int i = 0; i < n; i++) {
+        for (int j = a[i].first; j < a[i].second; j++) {
             luu[j] = 1;
         }
     }
-    ll maxx = 0;
-    ll minn = INT_MAX;
-    for(int i = 0; i < n; i++){
-        ll curr  = max(a[i].first, a[i].second);
-        ll currmin = min(a[i].first, a[i].second);
-        maxx = max(curr, maxx);
-        minn = min(currmin,minn);
-    }
-    vector<int> luukolam(1e6+5, 0);
-    for(int i = minn; i < maxx; i++){
-        if(luu[i] == 0){
-            ll max0 = 0;
-            for(int j = i; j <= maxx; j++){
-                if(luu[j] == 1){
-                    max0 = j- 1;
-                    break;
-                }
-            }
-            //cout<<max0<<" "<<i<<endl;
-            ll c = max0 - i+2;
-            luukolam.push_back(c);
-            if( c == 101){
-                cout<<i<<" "<<max0<<endl;
-            }
+    ll max_lam = 0, max_kolam = 0;
+    ll current_lam = 0, current_kolam = 0;
+    for (int i = min_start; i < max_end; i++) {
+        if (luu[i] == 1) {
+            current_lam++;
+            max_lam = max(max_lam, current_lam);
+            current_kolam = 0;
+        } else {
+            current_kolam++;
+            max_kolam = max(max_kolam, current_kolam);
+            current_lam = 0;
         }
     }
-    sort(luukolam.begin(), luukolam.end(), greater<int>());
-    cout<<luukolam[0];
+    cout<<max_lam << endl;
+    cout<<max_kolam << endl;
+
+    return 0;
 }
+/*
+3
+100 120
+150 400
+500 1200
+*/
+/*
+5
+3 8
+2 5
+9 12
+19 24
+1 4
+*/
