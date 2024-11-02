@@ -9,19 +9,17 @@ int main(){
     for(int i = 0; i < n;i++)cin>>a[i];
     vector<pair<int, int>> pos;
     vector<int> danhdau(1e3+5, 0);
-    for(int i = 0; i < n; i++){
+    vector<int> start(1e4+5, -1);
+    vector<int> end(1e4+5, -1);
+    for(int i = 0; i < n;i++){
         danhdau[a[i]]++;
-        int start = i;
-        if(danhdau[a[i]] != 1) continue;
-        int end = INT_MIN;
-        for(int j = i; j < n; j++){
-            if(a[j] == a[i]){
-                if(j > end){
-                    end = j;
-                }
-            }
+        end[a[i]] = i;
+        if(danhdau[a[i]] == 1) start[a[i]] = i;
+    }
+    for(int i = 0; i < n; i++){
+        if(start[i] != -1 && end[i] != -1){
+            pos.push_back({start[i], end[i]});
         }
-        pos.push_back({start, end});
     }
     ll maxx = 0;
     for(int i = 0; i < pos.size(); i++){
