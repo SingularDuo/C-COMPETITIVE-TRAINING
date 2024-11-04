@@ -1,5 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
+#define ll long long
+#define endl "\n"
 void init(){
     freopen("10_2.inp", "r", stdin);
     freopen("10_2.out", "w", stdout);
@@ -9,15 +11,15 @@ void init(){
 }
 int main() {
     init();
-    int n;
+    ll n;
     cin >> n;
-    vector<int> vec;
+    vector<ll> vec;
     while (n > 0) {
-        int a = n % 2;
+        ll a = n % 2;
         vec.push_back(a);
         n /= 2;
     }
-    for (int i = vec.size() - 1; i >= 0; i--) {
+    for (ll i = vec.size() - 1; i >= 0; i--) {
         cout << vec[i];
     }
     cout << endl;  
