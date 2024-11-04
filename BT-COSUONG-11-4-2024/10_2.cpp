@@ -2,15 +2,15 @@
 using namespace std;
 #define ll long long
 #define endl "\n"
-void init(){
+/**void init(){
     freopen("10_2.inp", "r", stdin);
     freopen("10_2.out", "w", stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
-}
+}*/
 int main() {
-    init();
+    //init();
     ll n;
     cin >> n;
     vector<ll> vec;
