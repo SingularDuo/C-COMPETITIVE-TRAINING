@@ -12,10 +12,7 @@ int main(){
     vector<int> danhdau(max_val + 1, 0);
     vector<int> start(max_val + 1, -1);
     vector<int> end(max_val + 1, -1);
-<<<<<<< HEAD
     
-=======
->>>>>>> 8663c84da952d3bca3918e66eb89539a8971f5f7
     for(int i = 0; i < n; i++) {
         danhdau[a[i]]++;
         end[a[i]] = i;
