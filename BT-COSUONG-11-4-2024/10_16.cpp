@@ -11,7 +11,7 @@ void init() {
 }
 int main() {
     init();
-    lldiv_t n;
+    ll n;
     cin >> n;
     vector<int> vec;
     while (n > 0) {
