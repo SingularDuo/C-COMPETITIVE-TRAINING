@@ -10,6 +10,7 @@ void init(){
     cout.tie(0);
 }
 int main() {
+    init();
     ll n, k;
     cin >> n >> k;
     for (ll i = 1; i <= n; i++) {
