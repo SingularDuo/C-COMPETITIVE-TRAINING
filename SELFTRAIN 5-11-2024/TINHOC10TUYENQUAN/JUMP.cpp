@@ -4,7 +4,6 @@ using namespace std;
 #define endl "\n"
 int findMaxJumpLength(const vector<int>& A, int N, int P) {
     int maxJumpLength = 0;
-
     for (int i = 0; i < N - 1; ++i) {
         for (int j = i + 1; j < N; ++j) {
             if (A[j] - A[i] >= P) {
