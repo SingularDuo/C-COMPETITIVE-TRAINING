@@ -8,6 +8,7 @@ int main() {
     vector<pair<int, int>> a(n);
     for (int i = 0; i < n; i++) cin >> a[i].first >> a[i].second;
     int minn = INT_MAX, maxx = INT_MIN;
+    //thay tim minn maxx trong for thanh minn max co san trong c++
     for (int i = 0; i < n; i++) {
         minn = min(minn, a[i].first);
         maxx = max(maxx, a[i].second);

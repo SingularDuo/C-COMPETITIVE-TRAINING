@@ -1,31 +1,34 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 #define ll long long
-#define endl "/n"
-int main()
-{
-    int n;
-    cin>>n;
-    vector<int> xich(n);
-    for(int i =0 ; i < n; i++)cin>>xich[i];
-    if(n == 2)
-    {
-        cout<<"1";
-        return 0;
+#define endl "\n"
+
+bool able(int x, string s){
+    int cnt = 0;
+    for(int i = 0; i < s.size(); i++){
+        if(s[i] == ' ') cnt++;
     }
-    else{
-        sort(xich.begin(), xich.end());
-        for(int i = 0; i < n; i++){
-            if(xich[i] == n -2){
-                cout<<xich[i];
-                return 0;
-            }
+    return x == cnt;
+}
+
+int main(){
+    ll n;
+    cin >> n;
+    cin.ignore();
+    string s;
+    getline(cin, s);
+
+    int minn = INT_MAX;
+    for(int i = 0; i < s.size(); i++){
+        if('0' <= s[i] && s[i] <= '9'){
+            minn = min(s[i], minn);
         }
-        cout<<n-2+1;
     }
 
+    int cnt = minn;
+    while(!able(cnt, s)){
+        cnt++;
+    }
+
+    cout << cnt << endl; 
 }
-/**
- * 3
- * 3 2 3
- */
