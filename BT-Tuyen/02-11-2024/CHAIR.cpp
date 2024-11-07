@@ -2,33 +2,31 @@
 using namespace std;
 #define ll long long
 #define endl "\n"
-
-bool able(int x, string s){
-    int cnt = 0;
-    for(int i = 0; i < s.size(); i++){
-        if(s[i] == ' ') cnt++;
-    }
-    return x == cnt;
-}
-
-int main(){
+int main() {
     ll n;
     cin >> n;
-    cin.ignore();
-    string s;
-    getline(cin, s);
-
-    int minn = INT_MAX;
-    for(int i = 0; i < s.size(); i++){
-        if('0' <= s[i] && s[i] <= '9'){
-            minn = min(s[i], minn);
+    vector<ll> a(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+    ll cach = n - 1;
+    if (n == 2) {
+        cout << "1" << endl;
+        return 0;
+    }
+    sort(a.begin(), a.end());
+    ll cnt = 0; 
+    ll i = 0;
+    while (cach > 0 && i < n) {
+        if (a[i] <= cach) {
+            cnt+=a[i];
+            cach -= a[i]+1;
+        } else {
+            cnt++;
+            cach--;
         }
+        i++;
     }
-
-    int cnt = minn;
-    while(!able(cnt, s)){
-        cnt++;
-    }
-
-    cout << cnt << endl; 
+    cout << cnt << endl;
+    return 0;
 }

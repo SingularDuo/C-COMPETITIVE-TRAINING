@@ -7,12 +7,12 @@ int main() {
     cin >> n;
     vector<pair<int, int>> a(n);
     for (int i = 0; i < n; i++) cin >> a[i].first >> a[i].second;
-    int minn = INT_MAX, maxx = INT_MIN;
-    //thay tim minn maxx trong for thanh minn max co san trong c++
-    for (int i = 0; i < n; i++) {
-        minn = min(minn, a[i].first);
-        maxx = max(maxx, a[i].second);
-    }
+    int minn = min_element(a.begin(), a.end(), [](const pair<int, int>& p1, const pair<int, int>& p2) {
+        return p1.first < p2.first;
+    })->first;
+    int maxx = max_element(a.begin(), a.end(), [](const pair<int, int>& p1, const pair<int, int>& p2) {
+        return p1.second < p2.second;
+    })->second;
     vector<int> luu(maxx + 1, 0);
     for (int i = 0; i < n; i++) {
         for (int j = a[i].first; j < a[i].second; j++) {
