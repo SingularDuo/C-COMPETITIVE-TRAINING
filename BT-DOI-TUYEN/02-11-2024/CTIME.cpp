@@ -11,7 +11,7 @@ int main() {
     int minn = INT_MAX, maxx = INT_MIN;
     for (int i = 0; i < n; i++) {
         minn = min(minn, a[i].first);
-        maxx = max(maxx, a[i].second);
+        maxx = max(maxx, a[i].second - 1);
     }
     vector<int> luu(maxx + 2, 0);
     vector<int> cong(maxx + 2, 0);
@@ -21,7 +21,7 @@ int main() {
         int L = a[i].first;
         int R = a[i].second;
         cong[L]++;
-        tru[R + 1]++;
+        tru[R]++;
     }
 
     luu[0] = cong[0] - tru[0];
@@ -35,11 +35,11 @@ int main() {
     for (int i = minn; i <= maxx; i++) {
         if (luu[i] > 0) {
             current_lam++;
-            max_lam = max(max_lam, current_lam - 1);
+            max_lam = max(max_lam, current_lam);
             current_kolam = 0;
         } else {
             current_kolam++;
-            max_kolam = max(max_kolam, current_kolam + 1);
+            max_kolam = max(max_kolam, current_kolam);
             current_lam = 0; 
         }
     }
