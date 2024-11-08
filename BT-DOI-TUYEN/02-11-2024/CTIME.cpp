@@ -32,7 +32,7 @@ int main() {
     ll max_lam = 0, max_kolam = 0;
     ll current_lam = 0, current_kolam = 0;
 
-    for (int i = minn; i <= maxx; i++) {
+    for (int i = minn; i < maxx; i++) {
         if (luu[i] > 0) {
             current_lam++;
             max_lam = max(max_lam, current_lam);
