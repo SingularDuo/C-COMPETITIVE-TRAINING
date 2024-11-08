@@ -35,11 +35,11 @@ int main() {
     for (int i = minn; i < maxx; i++) {
         if (luu[i] > 0) {
             current_lam++;
-            max_lam = max(max_lam, current_lam);
+            max_lam = max(max_lam, current_lam - 1);
             current_kolam = 0;
         } else {
             current_kolam++;
-            max_kolam = max(max_kolam, current_kolam);
+            max_kolam = max(max_kolam, current_kolam + 1);
             current_lam = 0; 
         }
     }
