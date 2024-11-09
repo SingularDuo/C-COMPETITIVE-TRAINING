@@ -14,12 +14,11 @@ int main() {
         }
         while (chocolates.size() > 1) {
             if (chocolates.front() > chocolates.back()) {
-                chocolates.pop_front();
+                chocolates.erase(chocolates.begin());
             } else {
                 chocolates.pop_back();
             }
         }
-
         cout << chocolates.front() << endl;
     }
     return 0;

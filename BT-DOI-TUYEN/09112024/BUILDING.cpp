@@ -23,7 +23,7 @@ int main()
                 max_current = a[i];
             }
         }
-        cout<<cnt;
+        cout<<cnt<<endl;
     }
 
     return 0;
