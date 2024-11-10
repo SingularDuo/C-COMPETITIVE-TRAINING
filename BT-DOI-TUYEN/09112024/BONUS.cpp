@@ -1,31 +1,30 @@
 #include <bits/stdc++.h>
-
 using namespace std;
-const int maxn = 1e5;
-long long curr;
-int a[maxn + 5], cnt = 0, n, b, d;
+#define ll long long
+#define endl "\n"
 
 int main()
 {
+    ll n;
     cin >> n;
-
-    for (int i = 1; i <= n; i++){
-        cin >> a[i];
+    vector<ll> a(n);
+    for (int i = 0; i < n; i++) cin >> a[i];
+    sort(a.begin(), a.end());
+    ll maxtong = a[0] + n;  
+    int i = 0;
+    ll original_n = n; 
+    while (n > 0 && i < original_n) {  
+        a[i] = a[i] + n;
+        n--;
+        i++;
     }
-    sort(a + 1, a+n+1);
-    for (int i = 1; i <= n; i++){
-        curr = a[i] + n;
-        cnt++;
-        d = n;
-        for (int j = i; j <= n; j++){
-            d--;
-            if (i == j) j++;
-            if (curr < (a[j] + d)){
-                cnt--;
-                break;
-            }
+    ll cnt = 0;
+    for (ll j = 0; j < original_n; j++) {
+        if (a[j] == maxtong) {
+            cnt++;
         }
     }
     cout << cnt;
+
     return 0;
 }
