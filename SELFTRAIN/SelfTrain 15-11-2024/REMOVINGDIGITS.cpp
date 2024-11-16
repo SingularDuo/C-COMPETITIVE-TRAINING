@@ -16,3 +16,18 @@ int main() {
     cout << cnt << endl;
     return 0;
 }
+/*
+20
+co the tru 2 hoac 0
+18
+co the tru 1 hoac 8
+10
+co the tru 1 hoac 0
+9
+chi co the tru 9
+= 0
+*/
+/*
+68
+6868686868686868686868686868
+*/
