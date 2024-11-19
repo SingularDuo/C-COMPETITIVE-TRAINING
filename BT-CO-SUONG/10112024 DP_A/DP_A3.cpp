@@ -16,5 +16,6 @@ int main() {
     sort(a.begin(), a.end(),greater<int>());
     cout<<a[0]<<" "<<a[1]<<" "<<a[n]<<endl;
     cout<<a[0]+a[1] - a[n];
+    cout << "hello wolrd";
     return 0;
 }

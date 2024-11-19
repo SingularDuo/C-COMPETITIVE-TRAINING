@@ -4,7 +4,13 @@ using namespace std;
 #define endl "\n"
 const int maxn = 1e6;
 bool prime[maxn + 5];
-
+void init() {
+    freopen("BAI1.inp", "r", stdin);
+    freopen("BAI1.out", "w", stdout);
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+}
 void Sang() {
     for (int i = 2; i <= maxn; i++) prime[i] = 1;
     int m = sqrt(maxn);
@@ -16,66 +22,52 @@ void Sang() {
 }
 
 bool latnguoc(int n) { 
-    string s = to_string(n);
-    bool is_alternating = true; 
-    if (s.size() < 2) return false; 
-    bool check02 = s[0] < s[1]; 
-    for (int i = 1; i < s.size() - 1; i++) { 
-        int c = s[i] - '0'; 
-        int d = s[i + 1] - '0'; 
-        if (check02) { 
-            if (c >= d) { 
-                is_alternating = false; 
-                break; 
+    string s = to_string(n); 
+    if (s.length() < 2) return false;
+    bool increasing = s[0] < s[1]; 
+    for (int i = 0; i < s.length() - 1; ++i) { 
+        if ((increasing && s[i] >= s[i + 1]) || (!increasing && s[i] <= s[i + 1])) { 
+            return false; 
             } 
-        } else { 
-            if (c <= d) { 
-                is_alternating = false; 
-                break; 
-            } 
+            increasing = !increasing; 
         } 
-        check02 = !check02; 
-    } 
-    return is_alternating; 
-}
-
-int dem(int n) {
-    int cnt = 0;
-    while (n > 0) {
-        n /= 10;
-        cnt++;
-    }
-    return cnt;
+    return true;
 }
 
 int main() {
-    Sang(); 
+    init();
+    Sang();
     int n;
     cin >> n;
     vector<ll> a(n);
     for (int i = 0; i < n; i++) cin >> a[i];
-    
     int cnt = 0;
     ll maxx = 0;
     int k;
     cin >> k;
     ll x = pow(10, k);
     for (int i = 0; i < n; i++) {
-        if (prime[a[i]] && latnguoc(a[i])) {
-            cnt++;
+        if (prime[a[i]]) {
+            if(latnguoc(a[i])){
+                cnt++;
+            }
         }
     }
-    
+    cout << cnt << endl;
     ll need = 0;
     for (int i = x; i >= 0; i--) {
         if (prime[i] && latnguoc(i)) {
-            need = i;
-            break;
+            cout<<i;
+            return 0;
         }
     }
     
-    cout << cnt << endl;
+    
     cout << need << endl;
 
     return 0;
+    
 }
+/*
+   
+*/

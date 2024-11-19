@@ -1,16 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define endl "\n"
+void init() {
+    freopen("BANCO1.inp", "r", stdin);
+    freopen("BANCO1.out", "w", stdout);
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+}
 const int maxN = 1e6;
 bool mark[8][8]; 
 int a[8][8];  
 int dr[8] = {0, -1, 0, 1, -1, 1, -1, 1}; 
 int dc[8] = {-1, 0, 1, 0, 1, 1, -1, -1}; 
-
 bool ValidCell(int r, int c) {
     return (r >= 0 && r < 8 && c >= 0 && c < 8); 
 }
-
 int DFS(int r, int c) {
     int res = 1; 
     mark[r][c] = true; 
@@ -23,8 +28,8 @@ int DFS(int r, int c) {
     }
     return res;
 }
-
 int main() {
+    init();
     for (int i = 0; i < 8; i++) {
         string s;
         cin >> s;
