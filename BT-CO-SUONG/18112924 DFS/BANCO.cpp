@@ -2,6 +2,13 @@
 using namespace std;
 #define endl "\n"
 const int maxN = 1e6;
+void init() {
+    freopen("BANCO.inp", "r", stdin);
+    freopen("BANCO.out", "w", stdout);
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+}
 bool mark[8][8][4]; 
 int a[8][8];  
 pair<int, int> x[8];
@@ -31,8 +38,8 @@ int DFS(int r, int c, int huong) {
     }
     return res;
 }
-
 int main() {
+    init();
     huong();
     for (int i = 0; i < 8; i++) {
         string s;
