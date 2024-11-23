@@ -1,1 +1,4 @@
-# Đây là danh sách bài làm của SingularDuo
+# TỔNG HỢP BÀI LÀM
+# BT-CO-SUONG
+# BT-DOI-TUYEN
+# SELFTRAIN

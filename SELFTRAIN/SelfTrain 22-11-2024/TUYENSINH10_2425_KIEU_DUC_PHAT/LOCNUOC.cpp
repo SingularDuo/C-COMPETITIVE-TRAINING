@@ -2,8 +2,15 @@
 using namespace std;
 #define ll long long
 #define endl "\n"
-
+void init() {
+    freopen("LOCNUOC.inp", "r", stdin);
+    freopen("LOCNUOC.out", "w", stdout);
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+}
 int main(){
+    init();
     ll n, m;
     cin >> n >> m;
 
