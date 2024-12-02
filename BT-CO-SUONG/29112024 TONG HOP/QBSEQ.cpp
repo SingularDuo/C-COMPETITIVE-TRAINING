@@ -2,6 +2,7 @@
 using namespace std;
 #define endl "\n"
 #define ll long long
+
 void init() {
     freopen("QBSEQ.inp", "r", stdin);
     freopen("QBSEQ.out", "w", stdout);
@@ -11,27 +12,32 @@ void init() {
 }
 int main() {
     init();
-    int n,k;
-    cin >> n>>k;
+    int n, k;
+    cin >> n >> k;
     vector<int> a(n);
-    for (int i = 1; i <= n; i++) cin >> a[i];
+    for (int i = 0; i < n; i++) cin >> a[i];
 
-    vector<int> prefix(n+5); 
-    prefix[0] = a[0]; 
+    vector<int> prefix(n + 1);
+    prefix[0] = 0;
     for (int i = 1; i <= n; i++) {
-        prefix[i] = prefix[i - 1] + a[i];
+        prefix[i] = prefix[i - 1] + a[i - 1];
     }
+
+    unordered_map<int, int> danhdau;
+    danhdau[0] = 0;
     int soluong = 0;
-    for(int i = 1; i <= n; i++){
-        for(int j  = i+1; j <= n; j++){
-            int current = prefix[j] - prefix[i-1];
-            if(current % k  == 0){
-                int currsoluong = j - i + 1;
-                soluong = max(currsoluong,soluong);
-            }
+
+    for (int i = 1; i <= n; i++) {
+        int currentval = prefix[i] % k;
+        if (danhdau.count(currentval) != 0) {
+            int curr = i - danhdau[currentval];
+            soluong = max(curr, soluong);
+        } else {
+            danhdau[currentval] = i;
         }
     }
-    cout<<soluong;
+
+    cout << soluong << endl;
 
     return 0;
 }
