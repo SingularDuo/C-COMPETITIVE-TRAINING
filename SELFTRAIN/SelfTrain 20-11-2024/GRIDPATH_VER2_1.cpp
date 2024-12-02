@@ -12,7 +12,7 @@ void path(int x, int y, int n) {
         path_vector.push_back({x, y}); // Lưu ô cuối vào đường đ
         all.push_back(path_vector);
         path_vector.pop_back(); // xoa di xem con di duoc duong khac ko
-        return; // Added return to stop further recursion
+        return; 
     }
     if (x < n && y < n && b[x][y] == 1) { // Kiểm tra ô hợp lệ
         path_vector.push_back({x, y}); // Lưu vào đường đi

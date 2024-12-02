@@ -10,7 +10,7 @@ void init() {
     cout.tie(0);
 }
 int main(){
-    init();
+    //init();
     ll n, m;
     cin >> n >> m;
 

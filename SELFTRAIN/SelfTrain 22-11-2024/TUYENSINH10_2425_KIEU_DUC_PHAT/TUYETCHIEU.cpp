@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
+#include <chrono>
 using namespace std;
 #define ll long long
-#define endl "\n"
 
 void init() {
     freopen("TUYETCHIEU.inp", "r", stdin);
@@ -15,28 +15,18 @@ int main() {
     init();
     ll n, k;
     cin >> n >> k;
-
-    vector<int> a(n + 1); 
-    vector<vector<int>> b(1e5 + 1); 
-
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
-        b[a[i]].push_back(i); 
-    }
-
-    for (int i = 1; i <= n; i++) {
-        int val = a[i];
-        for (size_t j = 0; j < b[val].size(); j++) {
-            int pos = b[val][j];
-            if (pos > i && pos < i + k) { 
-                if (a[i] == a[pos]) { 
-                    cout << i << endl;
-                    return 0;
-                }
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) cin >> a[i];
+    vector<int> last_used(1000001, -1); 
+    int last = -1;
+    for (int i = 0; i < n; i++) {
+        if (last_used[a[i]] != -1 && i - last_used[a[i]] <= k) {
+            if (last == -1 || a[i] < last) {
+                last = a[i];
             }
         }
+        last_used[a[i]] = i; 
     }
-
-    cout << "-1";
+    cout << last << endl;
     return 0;
 }
