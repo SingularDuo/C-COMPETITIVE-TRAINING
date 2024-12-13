@@ -24,7 +24,7 @@ int main(){
     for(ll i = k - 1; i <= n - k + 2; i++){
         for(ll j = k - 1; j <= n - k + 2; j++){
             ll currval = a[i][j];
-            for(ll l = 1; l <= k / 2; l++){
+            for(ll l = 1; l <= (n-k/2)+2; l++){
                 currval += a[i-l][j-l];
                 currval += a[i+l][j+l];
                 currval += a[i-l][j+l];
