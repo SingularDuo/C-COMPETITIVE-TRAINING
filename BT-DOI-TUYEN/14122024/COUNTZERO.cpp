@@ -2,16 +2,25 @@
 using namespace std;
 #define ll long long
 #define endl "\n"
-ll cnt(long long n) {
-    ll count = 0;
-    for (ll i = 5; n / i >= 1; i *= 5) {
-        count += n / i;
+ll power(ll a, ll b) {
+    ll res = 1;
+    while (b > 0) {
+        if (b & 1)
+            res = res * a;
+        a = a * a;
+        b >>= 1;
     }
-    return count;
+    return res;
 }
 int main() {
     ll n;
     cin >> n;
-    cout << cnt(n) << endl;
+    ll i = 1;
+    ll res = 0;
+    while(n / power(5, i) > 0){
+        res += n/power(5,i);
+        i++;
+    }
+    cout<<res;
     return 0;
 }
