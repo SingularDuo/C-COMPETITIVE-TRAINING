@@ -27,28 +27,15 @@ int main() {
             prefix[i] = prefix[i - 1] + a[i];
             cnt[prefix[i] % k]++;
         }
-        cnt[0] ++;
+        cnt[0]++;
+        // 0 % k du
         ll soluong = 0;
         for (auto i : cnt) {
-            if (i.second > 1) {
+            if(i.second > 1){
                 soluong += (i.second * (i.second - 1)) / 2;
             }
         }
-        
         cout << soluong << endl;
     }
     return 0;
 }
-
-/*
-Logic theo bài SUMSEQ0, sẽ có mối liên hệ giữa các phần tử %k == 0
-Cần tìm mối liên hệ giữa các đoạn, prefix sum %k == 0
-*/
-/*
-6 5
-11 6 7 12 20 8
-*/
-/*
-10 3
-2 3 5 7 9 6 12 7 11 15
-*/

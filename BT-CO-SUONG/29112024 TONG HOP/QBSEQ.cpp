@@ -26,7 +26,6 @@ int main() {
     unordered_map<int, int> danhdau;
     danhdau[0] = 0;
     int soluong = 0;
-
     for (int i = 1; i <= n; i++) {
         int currentval = prefix[i] % k;
         if (danhdau.count(currentval) != 0) {
@@ -36,7 +35,6 @@ int main() {
             danhdau[currentval] = i;
         }
     }
-
     cout << soluong << endl;
 
     return 0;
