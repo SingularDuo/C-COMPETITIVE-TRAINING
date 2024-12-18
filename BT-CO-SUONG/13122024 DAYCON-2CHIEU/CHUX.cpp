@@ -20,17 +20,16 @@ int main(){
             cin >> a[i][j];
         }
     }
+    for(ll i = 1;i <= n;i++){
+        for(ll j = 1; j <= n; j++){
+            f[i][j] = f[i-1][j] + f[i][j-1] - f[i-1][j-1] + a[i][j];
+        }
+    }
     ll maxx = INT_MIN;
     for(ll i = k - 1; i <= n - k + 2; i++){
         for(ll j = k - 1; j <= n - k + 2; j++){
-            ll currval = a[i][j];
-            for(ll l = 1; l <= (n-k/2)+2; l++){
-                currval += a[i-l][j-l];
-                currval += a[i+l][j+l];
-                currval += a[i-l][j+l];
-                currval += a[i+l][j-l];
-            }
-            maxx = max(maxx, currval);
+            ll sum = f[i][j] - f[i-k][j] - f[i][j-k] + f[i-k][j-k];
+            ll f_center = i - k, s_center = j - k;
         }
     }
     cout << maxx;

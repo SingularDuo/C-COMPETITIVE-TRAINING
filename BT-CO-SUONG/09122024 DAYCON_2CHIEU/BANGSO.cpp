@@ -28,6 +28,7 @@ int main() {
     int maxx = INT_MIN, first = 0, sec = 0;
     for(int i = 3; i <= n; i++) {
         for(int j = 3; j <= m; j++) {
+             
             int sum = f[i][j] - f[i-3][j] - f[i][j-3] + f[i-3][j-3];
             if(sum > maxx) {
                 maxx = sum;

@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
-const long long MOD = 1E18;
+const long long MOD = 1e18;
 int randInt(int l, int r){
     return l + rand() % (r - l + 1);
 }
