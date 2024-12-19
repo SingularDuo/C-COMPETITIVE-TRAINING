@@ -15,7 +15,7 @@ ll dequy(ll x, ll y, ll z, ll b1, ll b2, ll b3){
         }
     }
     
-    if(check == true){  // Corrected from '=' to '=='
+    if(check == true){  
         return 1; 
     }
     b[x][y][z] = 1;
