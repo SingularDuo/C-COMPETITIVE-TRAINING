@@ -33,6 +33,7 @@ bool isdacbiet(int n){
 }
 int main(){
     init();
+    sieve();
     int t;
     cin>>t;
     while(t--){

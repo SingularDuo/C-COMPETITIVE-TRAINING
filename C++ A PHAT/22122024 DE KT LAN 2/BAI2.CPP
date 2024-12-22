@@ -18,6 +18,7 @@ void cap3(){
     }
 }
 int main(){
+    init();
     ll n;
     cin>>n;
     for(ll i =1; i <= n; i++){
@@ -35,4 +36,16 @@ int main(){
         cout<<res;
         return 0;
     }
+    ll res = 0;
+    for(ll i = 1; i <= n; i++){
+        ll sodu = a[i] % 3;
+        ll soducan = 3- sodu;
+        if(sodu == 0)soducan = 0;
+        for(ll j = i +1; j <= n; j++){
+            if(a[j] % 3 == soducan){
+                res++;
+            }
+        }
+    }
+    cout<<res;
 }
