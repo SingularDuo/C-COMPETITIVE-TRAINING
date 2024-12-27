@@ -6,7 +6,6 @@ using namespace std;
 int a[1005][1005];
 int h[1005][1005];
 int dp[1005][1005];
-int minn[1005][1005];
 
 int main() {
     int n, m;
@@ -16,7 +15,6 @@ int main() {
             cin >> a[i][j];
         }
     }
-
     for (int i = 1; i <= m; i++) {
         for (int j = 1; j <= n; j++) {
             if (i == 1) {
@@ -33,29 +31,20 @@ int main() {
     ll maxx = LLONG_MIN;
     for(int i = 1; i <= m; i++){
         for(int j = 1; j <= m; j++){
-            for(int k = j+1; k<=n;k++){
+            for(int k = j + 1; k <= n; k++){
                 if(h[i][k] == 0) break;
                 else{
-                    ll curr = k * minn[i][k];
-                    cout<<curr<<endl;
+                    int minn = *min_element(h[i] + j, h[i] + k + 1);
+                    ll curr = (k - j + 1) * minn; 
                     maxx = max(curr, maxx);
                 }
             }
         }
     }
-    cout<<maxx;
-
-    cout << endl;
-    for (int i = 1; i <= m; i++) {
-        for (int j = 1; j <= n; j++) {
-            cout << minn[i][j] << " ";
-        }
-        cout << endl;
-    }
+    cout << maxx;
 
     return 0;
 }
-
 /*
 5 6
 0 1 1 1 1 1
@@ -63,10 +52,4 @@ int main() {
 0 0 0 1 1 1
 1 1 1 1 1 1
 1 1 1 1 1 1
-
-0 1 1 1 1 1 
-1 2 2 2 2 2 
-0 0 0 3 3 3 
-1 1 1 4 4 4 
-2 2 2 5 5 5
 */
