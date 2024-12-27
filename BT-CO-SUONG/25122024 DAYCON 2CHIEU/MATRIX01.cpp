@@ -1,81 +1,72 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-#define ll long long 
+#define ll long long
 #define endl "\n"
 
 int a[1005][1005];
+int h[1005][1005];
 int dp[1005][1005];
-
-void init() {
-    freopen("MATRIX01.INP", "r", stdin);
-    freopen("MATRIX01.OUT", "w", stdout);
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
-}
+int minn[1005][1005];
 
 int main() {
-    //init();
     int n, m;
-    cin >> m >> n; 
+    cin >> m >> n;
     for (int i = 1; i <= m; i++) {
         for (int j = 1; j <= n; j++) {
             cin >> a[i][j];
         }
     }
-    for (int i = 1; i <= m; i++) {
-        for (int j = 1; j <= n; j++) {
-            dp[i][j] = (a[i][j] == 1) ? 1 : 0;
-        }
-    }
-    int maxx = 0; 
 
     for (int i = 1; i <= m; i++) {
         for (int j = 1; j <= n; j++) {
-            int first = 0, second = 0;
-            if (j > 1 && a[i][j - 1] >= 1 && dp[i][j] > 0) {
-                if (dp[i][j - 1] == 1 && a[i][j] == 1) {
-                    first = 2;
-                } else if (dp[i][j - 1] == 2 && a[i][j] == 1) {
-                    first = 3;
-                } else {
-                    first = dp[i][j - 1] / 3 + dp[i][j - 1];
-                }
+            if (i == 1) {
+                h[i][j] = a[i][j];
+            } else if (a[i][j] > 0 && a[i - 1][j] > 0) {
+                h[i][j] = h[i - 1][j] + 1;
+            } else if (a[i][j] > 0 && a[i - 1][j] == 0) {
+                h[i][j] = 1;
+            } else {
+                h[i][j] = 0;
             }
-
-            if (i > 1 && a[i - 1][j] == 1 && dp[i][j] > 0) { 
-                if (dp[i - 1][j] == 1 && a[i][j] == 1) {
-                    second = 2;
-                } else if (dp[i - 1][j] == 2 && a[i][j] == 1) {
-                    second = 3;
-                } else {
-                    second = dp[i - 1][j] / 3 + dp[i - 1][j];
-                }
-            }
-            if(dp[i-1][j] == 2 && dp[i][j-1] == 2 && dp[i-1][j-1] > 0){
-                dp[i][j] = 4;
-                continue;
-            }
-
-            dp[i][j] = max({dp[i][j], first, second});
-            maxx = max(maxx, dp[i][j]);
         }
     }
-    cout<<endl;
+    ll maxx = LLONG_MIN;
+    for(int i = 1; i <= m; i++){
+        for(int j = 1; j <= m; j++){
+            for(int k = j+1; k<=n;k++){
+                if(h[i][k] == 0) break;
+                else{
+                    ll curr = k * minn[i][k];
+                    cout<<curr<<endl;
+                    maxx = max(curr, maxx);
+                }
+            }
+        }
+    }
+    cout<<maxx;
+
+    cout << endl;
     for (int i = 1; i <= m; i++) {
-        for (int j = 1; j <= n; j++) {  
-            cout<<dp[i][j]<<" ";
+        for (int j = 1; j <= n; j++) {
+            cout << minn[i][j] << " ";
         }
         cout << endl;
     }
-    cout << maxx << endl; 
+
     return 0;
 }
+
 /*
 5 6
 0 1 1 1 1 1
 1 1 1 1 1 1
-0 0 0 1 1 1 
+0 0 0 1 1 1
 1 1 1 1 1 1
 1 1 1 1 1 1
+
+0 1 1 1 1 1 
+1 2 2 2 2 2 
+0 0 0 3 3 3 
+1 1 1 4 4 4 
+2 2 2 5 5 5
 */
