@@ -26,7 +26,6 @@ int main(){
             if (dp[i-1][j] > 0 && dp[i][j-1] > 0 && dp[i-1][j-1] > 0 && a[i][j] > 0)
                 dp[i][j] = min(dp[i-1][j], min(dp[i][j-1], dp[i-1][j-1])) + a[i][j];
             else dp[i][j] = a[i][j];
-
             if (dp[i][j] > maxx) maxx = dp[i][j];
         }
     }

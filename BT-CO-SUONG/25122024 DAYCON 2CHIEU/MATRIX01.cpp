@@ -15,7 +15,7 @@ void init() {
 }
 
 int main() {
-    init();
+    //init();
     int n, m;
     cin >> m >> n; 
     for (int i = 1; i <= m; i++) {
@@ -36,22 +36,32 @@ int main() {
             if (j > 1 && a[i][j - 1] >= 1 && dp[i][j] > 0) {
                 if (dp[i][j - 1] == 1 && a[i][j] == 1) {
                     first = 2;
+                } else if (dp[i][j - 1] == 2 && a[i][j] == 1) {
+                    first = 3;
                 } else {
-                    first = dp[i][j - 1] / 3 + dp[i][j-1];
+                    first = dp[i][j - 1] / 3 + dp[i][j - 1];
                 }
             }
 
             if (i > 1 && a[i - 1][j] == 1 && dp[i][j] > 0) { 
                 if (dp[i - 1][j] == 1 && a[i][j] == 1) {
                     second = 2;
+                } else if (dp[i - 1][j] == 2 && a[i][j] == 1) {
+                    second = 3;
                 } else {
-                    second = dp[i - 1][j] / 3 + dp[i-1][j];
+                    second = dp[i - 1][j] / 3 + dp[i - 1][j];
                 }
             }
-                dp[i][j] = max({dp[i][j], first, second});
-                maxx = max(maxx, dp[i][j]);
+            if(dp[i-1][j] == 2 && dp[i][j-1] == 2 && dp[i-1][j-1] > 0){
+                dp[i][j] = 4;
+                continue;
             }
+
+            dp[i][j] = max({dp[i][j], first, second});
+            maxx = max(maxx, dp[i][j]);
+        }
     }
+    cout<<endl;
     for (int i = 1; i <= m; i++) {
         for (int j = 1; j <= n; j++) {  
             cout<<dp[i][j]<<" ";
@@ -61,3 +71,11 @@ int main() {
     cout << maxx << endl; 
     return 0;
 }
+/*
+5 6
+0 1 1 1 1 1
+1 1 1 1 1 1
+0 0 0 1 1 1 
+1 1 1 1 1 1
+1 1 1 1 1 1
+*/
