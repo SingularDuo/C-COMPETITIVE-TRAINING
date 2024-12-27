@@ -10,7 +10,7 @@ void init() {
 }
 
 int main() {
-    init();
+    //init();
     int m, n;
     cin >> m >> n;
     vector<vector<int>> a(m, vector<int>(n));

@@ -2,7 +2,6 @@
 using namespace std;
 #define ll long long
 #define endl "\n"
-
 bool compare(const pair<ll, ll>& a, const pair<ll, ll>& b) { 
     return a.second > b.second;
 }

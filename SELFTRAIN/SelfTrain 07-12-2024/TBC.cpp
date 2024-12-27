@@ -3,8 +3,8 @@ using namespace std;
 #define ll long long
 #define endl "\n"
 void init(){
-    freopen("TBC.inp", "r", stdin);
-    freopen("TBC.out","w", stdout);
+    freopen("TBC.INP", "r",stdin);
+    freopen("TBC.OUT","w",stdout);
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
