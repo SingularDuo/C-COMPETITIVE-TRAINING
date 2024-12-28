@@ -6,8 +6,15 @@ using namespace std;
 int a[1005][1005];
 int h[1005][1005];
 int dp[1005][1005];
-
+void init(){
+    freopen("MATRIX01.INP", "r", stdin);
+    freopen("MATRIX01.OUT", "w", stdout);
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+}
 int main() {
+    init();
     int n, m;
     cin >> m >> n;
     for (int i = 1; i <= m; i++) {
