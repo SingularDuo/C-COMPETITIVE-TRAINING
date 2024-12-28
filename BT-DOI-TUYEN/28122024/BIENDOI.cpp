@@ -1,39 +1,101 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 #define ll long long
 #define endl "\n"
-bool check_scp(ll n){
+
+// Function to check if a number is a perfect square
+bool check_scp(ll n) {
     ll a = sqrt(n);
-    return a*a == n;
+    return a * a == n;
 }
-bool near_scp(ll n){
-    if(check_scp(n+1) || check_scp(n-1)) return true;
-    else return false;
-}
-int main(){
-    ll n;
-    cin>>n;
-    int a[n+1][n+1];
-    vector<pair<ll, ll>> b(n+1);
-    for(int i = 1; i <= n;i++){
-        for(int j = 1; j <= n; j++){
-            cin>>a[i][j];
-            if(near_scp(a[i][j])){
-                b.push_back({i, j});
+
+// Function to find the most frequent non-zero element in the matrix
+ll find_diff(const vector<vector<ll>>& a) {
+    map<ll, ll> count;
+
+    for (const auto& row : a) {
+        for (ll val : row) {
+            if (val != 0) {
+                count[val]++;
             }
         }
     }
-    
+    ll curr = 0, diff = -1;
+    for (const auto& [k, val] : count) {
+        if (val > curr) {
+            curr = val;
+            diff = k;
+        }
+    }
 
+    return diff;
 }
+vector<vector<ll>> rotate(const vector<vector<ll>>& a, int n) {
+    vector<vector<ll>> rotated(n, vector<ll>(n));
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            rotated[i][j] = a[n - i - 1][n - j - 1];
+        }
+    }
+    return rotated;
+}
+
+int main() {
+    ll n;
+    cin >> n;
+    vector<vector<ll>> a(n, vector<ll>(n));
+
+    for (ll i = 0; i < n; i++) {
+        for (ll j = 0; j < n; j++) {
+            ll b;
+            cin >> b;
+
+            if (b == 0) {
+                a[i][j] = 0;
+                continue;
+            }
+
+            if (check_scp(b)) {
+                a[i][j] = sqrt(b) + 1;
+            } else {
+                a[i][j] = b;
+            }
+        }
+    }
+
+    ll diff = find_diff(a);
+    vector<vector<ll>> x = rotate(a, n);
+
+    for (int i = 0; i < n; i++) { 
+        for (int j = 0; j < n; j++) {
+            if (x[i][j] == 0) {
+                if (j > 0) {
+                    x[i][j] = x[i][j - 1] + diff;
+                } else if (i > 0) {
+                    x[i][j] = x[i - 1][n - 1] + diff;
+                }
+                if (check_scp(x[i][j])) {
+                    x[i][j] = sqrt(x[i][j]) + 1;
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i < n; i++) { 
+        for (int j = 0; j < n; j++) {
+            cout << x[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+
+
+
 /*
-3 5
-+5
-8 10
-+7
-15 17
-+9
-24 26
-+11
-35 37
+3
+0 10 5
+11 0 20
+15 10 5
 */
