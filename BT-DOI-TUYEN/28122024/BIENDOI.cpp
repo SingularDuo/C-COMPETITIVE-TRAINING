@@ -2,14 +2,10 @@
 using namespace std;
 #define ll long long
 #define endl "\n"
-
-// Function to check if a number is a perfect square
 bool check_scp(ll n) {
     ll a = sqrt(n);
     return a * a == n;
 }
-
-// Function to find the most frequent non-zero element in the matrix
 ll find_diff(const vector<vector<ll>>& a) {
     map<ll, ll> count;
 
