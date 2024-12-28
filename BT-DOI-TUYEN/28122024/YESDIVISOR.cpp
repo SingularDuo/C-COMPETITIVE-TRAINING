@@ -9,15 +9,16 @@ int main() {
     cout.tie(0);
     int n, k;
     cin >> n >> k;
-    vector<int> soUoc(n + 1, 0);
+    vector<int> souoc(n + 1, 0);
     for (int i = 1; i <= n; i++) {
-        for (int j = i; j <= n; j += i) {
-            soUoc[j]++;
+        for (int j = i; j <= n/i; j ++) {
+            souoc[i*j]+=2;
+            if(i == j )souoc[i*j]--;
         }
     }
     int res = 0;
     for (int i = 1; i <= n; i++) {
-        if (soUoc[i] <= k) res++;
+        if (souoc[i] <= k) res++;
     }
     cout << res << endl;
     return 0;
