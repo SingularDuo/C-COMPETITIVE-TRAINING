@@ -13,7 +13,7 @@ void init() {
 }
 
 int main() {
-    init();
+    //init();
     int n, f, s;
     cin >> n >> f >> s;
     string moves;

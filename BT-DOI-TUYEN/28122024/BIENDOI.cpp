@@ -40,7 +40,6 @@ int main() {
     ll n;
     cin >> n;
     vector<vector<ll>> a(n, vector<ll>(n));
-
     for (ll i = 0; i < n; i++) {
         for (ll j = 0; j < n; j++) {
             ll b;
@@ -58,10 +57,8 @@ int main() {
             }
         }
     }
-
     ll diff = find_diff(a);
     vector<vector<ll>> x = rotate(a, n);
-
     for (int i = 0; i < n; i++) { 
         for (int j = 0; j < n; j++) {
             if (x[i][j] == 0) {

@@ -12,7 +12,7 @@ void init(){
 } 
 
 int main() {
-    init();
+    //init();
     str a, b;
     getline(cin, a);
     getline(cin, b);
