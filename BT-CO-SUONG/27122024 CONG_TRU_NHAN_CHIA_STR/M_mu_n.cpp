@@ -39,27 +39,25 @@ string cong(string a, string b) {
 }
 
 string nhan(string s1, string s2) {
-    if (s1 == "0" || s2 == "0") return "0";
-
-    if (s2.size() > s1.size()) swap(s1, s2);
-
-    string res = "0";
-    for (int i = s2.size() - 1; i >= 0; i--) {
-        string s3 = "";
-        int carry = 0;
-        for (int j = s1.size() - 1; j >= 0; j--) {
-            int kq = (s2[i] - '0') * (s1[j] - '0') + carry;
-            carry = kq / 10;
-            kq %= 10;
-            s3 = to_string(kq) + s3;
+    int n = s1.size(), m = s2.size();
+    vector<int> result(n + m, 0);
+    for (int i = n - 1; i >= 0; i--) {
+        for (int j = m - 1; j >= 0; j--) {
+            int mul = (s1[i] - '0') * (s2[j] - '0');
+            int sum = mul + result[i + j + 1]; 
+            result[i + j + 1] = sum % 10;   
+            result[i + j] += sum / 10;      
         }
-        if (carry > 0) {
-            s3 = to_string(carry) + s3;
-        }
-        s3.append(s2.size() - 1 - i, '0');
-        res = cong(res, s3);
     }
-    return res;
+    string res = "";
+    bool leadingZero = true;
+    for (int num : result) {
+        if (num == 0 && leadingZero) continue; 
+        leadingZero = false;
+        res += to_string(num);
+    }
+    if(res.empty())return 0;
+    else return res;
 }
 
 int main() {
