@@ -60,7 +60,7 @@ string giaithua(ll a){
     return res;
 }
 int main(){
-    init();
+    //init();
     ll n;
     cin >> n;
     //auto start = chrono::high_resolution_clock::now();
