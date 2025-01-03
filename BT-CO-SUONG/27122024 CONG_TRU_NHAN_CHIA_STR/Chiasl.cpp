@@ -2,6 +2,65 @@
 using namespace std;
 #define ll long long
 #define endl "\n"
+#define str string
+void init() {
+    freopen("Chiasl.INP", "r", stdin);
+    freopen("Chiasl.OUT", "w", stdout);
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+}
+int comparee(const string& a, const string& b) {
+    if (a.length() > b.length()) return 1;
+    if (a.length() < b.length()) return -1;
+    return a.compare(b);
+}
+string tru(const string& a, const string& b) {
+    string result = "";
+    int borrow = 0, diff = 0;
+    int n1 = a.length(), n2 = b.length();
+
+    for (int i = 0; i < n1; i++) {
+        int digit1 = a[n1 - 1 - i] - '0';
+        int digit2 = (i < n2) ? b[n2 - 1 - i] - '0' : 0;
+
+        diff = digit1 - digit2 - borrow;
+        if (diff < 0) {
+            diff += 10;
+            borrow = 1;
+        } else {
+            borrow = 0;
+        }
+        result = char(diff + '0') + result;
+    }
+    while (result.length() > 1 && result[0] == '0') {
+        result.erase(0, 1);
+    }
+
+    return result;
+}
+string divide(const string& s1, const string& s2) {
+    string quotient = "";
+    string current = "";
+    for (char digit : s1) {
+        current += digit;
+        while (current.length() > 1 && current[0] == '0') {
+            current.erase(0, 1);
+        }
+
+        int count = 0;
+        while (comparee(current, s2) >= 0) {
+            current = tru(current, s2);
+            count++;
+        }
+        quotient += char(count + '0');
+    }
+    while (quotient.length() > 1 && quotient[0] == '0') {
+        quotient.erase(0, 1);
+    }
+
+    return quotient;
+}
 string nhan(string s1, string s2) {
     int n = s1.size(), m = s2.size();
     vector<int> result(n + m, 0);
@@ -23,37 +82,16 @@ string nhan(string s1, string s2) {
     if(res.empty())return 0;
     else return res;
 }
-string tru(string a, string b){
-    ll len = max(a.size(), b.size());
-     vector<int> res(len, 0);
-    ll carry = 0;
-    
-    while (a.size() < len) a = "0" + a;
-    while (b.size() < len) b = "0" + b;
-    for(int i = len - 1; i >= 0; i--){
-        int sub_a = a[i] - '0';
-        int sub_b = b[i] - '0';
-        ll kq = sub_a - sub_b - carry;
-        if(kq<0){
-            kq += 10;
-            carry = 1;
-        }
-        else carry = 0;
-        res[i] = kq;
-    }
-    bool lead = true;
-    string result ="";
-    for(int i = 0; i <= len-1; i++){
-        if(res[i] == 0 && lead == true)continue;
-        lead = false;
-        result = to_string(res[i]) + result;
-    }
-    reverse(result.begin(), result.end());
-    return result;
-}
-int main(){
-    string a, b;
-    getline(cin, a);
-    getline(cin, b);
+int main() {
+    init();
+    string num1, num2;
+    cin >> num1;
+    cin >> num2;
+    string result = divide(num1, num2);
+    string multiply = nhan(num2, result);
+    string du = tru(num1, multiply);
+    cout<<result<<endl;
+    cout<<du;
 
+    return 0;
 }
