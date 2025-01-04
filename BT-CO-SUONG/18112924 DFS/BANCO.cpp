@@ -3,6 +3,8 @@ using namespace std;
 #define endl "\n"
 const int maxN = 1e6;
 void init() {
+    x[1] = {-1, 1};
+    x[2] = {1, 1};
     freopen("BANCO.inp", "r", stdin);
     freopen("BANCO.out", "w", stdout);
     ios_base::sync_with_stdio(0);
@@ -14,8 +16,6 @@ int a[8][8];
 pair<int, int> x[8];
 void huong() {
     x[0] = {1, -1};
-    x[1] = {-1, 1};
-    x[2] = {1, 1};
     x[3] = {-1, -1};
     x[4] = {0, -1};
     x[5] = {0, 1};
