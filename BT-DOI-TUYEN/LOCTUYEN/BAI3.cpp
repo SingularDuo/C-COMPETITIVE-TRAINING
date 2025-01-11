@@ -3,7 +3,7 @@ using namespace std;
 #define ll long long
 #define endl "\n"
 
-const int maxn = 1e5;
+const int maxn = 1e6;
 const int MOD = 1e9 + 7;
 bool isprime[maxn + 1];
 
@@ -51,7 +51,10 @@ int main(){
     ll cnt = 0;
     for(int i = a; i <= b; i++){
         for(int j = i+1; j <= b; j++){
-            if(tuongdong(i, j))cnt++;
+            if(tuongdong(i, j)){
+                cnt++;
+            }
+            
         }
         
     }

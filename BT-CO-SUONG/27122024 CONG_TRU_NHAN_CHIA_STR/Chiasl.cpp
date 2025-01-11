@@ -83,7 +83,7 @@ string nhan(string s1, string s2) {
     else return res;
 }
 int main() {
-    init();
+    //init();
     string num1, num2;
     cin >> num1;
     cin >> num2;

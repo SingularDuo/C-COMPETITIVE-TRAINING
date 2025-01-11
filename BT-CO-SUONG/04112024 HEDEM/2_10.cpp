@@ -10,7 +10,7 @@ void init(){
     cout.tie(0);
 }
 int main() {
-    init();
+    //init();
     string s;
     getline(cin, s);
     int a = s.size() - 1;
