@@ -19,9 +19,12 @@ ll nen(ll n) {
 }
 
 int main() {
+    ll a, b;
+    cin>>a>>b;
     ll cnt = 0;
-    for (ll i = 1; i <= 50; i++) {
-        cout<<i<<" "<<nen(i)<<endl;
+    for (ll i = a; i <= b; i++) {
+        cnt+=nen(i);
     }
+    cout<<cnt;
     return 0;
 }
