@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
-#define endl "\n"
 
 ll nen(ll n) {
     ll cnt = 0;
@@ -38,8 +37,6 @@ int main() {
         cout<<"lasta"<<last_a<<endl;
         cout<<endl;
         ll rng = amt - amt_a;
-
-
         cnt += rng * (nen(i) + 1);
     }
 
