@@ -14,7 +14,7 @@ void init(){
     cout.tie(0);
 }
 int main() {
-    init();
+    //init();
     int n, m;
     cin >> m >> n;
     for (int i = 1; i <= m; i++) {
@@ -37,8 +37,8 @@ int main() {
     }
     ll maxx = LLONG_MIN;
     for(int i = 1; i <= m; i++){
-        for(int j = 1; j <= m; j++){
-            for(int k = j + 1; k <= n; k++){
+        for(int j = 1; j <= n; j++){
+            for(int k = j+1; k <= n; k++){
                 if(h[i][k] == 0) break;
                 else{
                     int minn = *min_element(h[i] + j, h[i] + k + 1);
