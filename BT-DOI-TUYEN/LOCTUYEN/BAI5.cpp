@@ -11,7 +11,7 @@ ll nen(ll n) {
             i = 2; 
             cnt++;
         } else {
-            i++;
+            i++;                    
         }
     }
     return cnt;
