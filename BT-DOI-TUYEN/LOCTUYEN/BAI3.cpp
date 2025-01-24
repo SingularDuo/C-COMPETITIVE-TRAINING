@@ -25,7 +25,6 @@ vector<ll> pttsnt(ll n) {
     }
     return fac;
 }
-
 bool check(const vector<ll>& a, const vector<ll>& b) {
     if (a.size() != b.size()) return false;
     vector<ll> sorted_a = a, sorted_b = b;
@@ -34,7 +33,7 @@ bool check(const vector<ll>& a, const vector<ll>& b) {
     for (size_t i = 0; i < sorted_a.size(); i++) {
         if (sorted_a[i] != sorted_b[i]) return false;
     }
-    return true; // Chuyển từ `false` sang `true` để đúng logic
+    return true; 
 }
 
 int main() {
@@ -45,7 +44,10 @@ int main() {
         for (ll j = i + 1; j <= b; j++) {
             vector<ll> factors_a = pttsnt(i);
             vector<ll> factors_b = pttsnt(j);
-            if (check(factors_a, factors_b)) cnt++;
+            if (check(factors_a, factors_b)){
+                cnt++;
+                cout<<i<<" "<<j<<endl;
+            } 
         }
     }
     cout << cnt << endl;
