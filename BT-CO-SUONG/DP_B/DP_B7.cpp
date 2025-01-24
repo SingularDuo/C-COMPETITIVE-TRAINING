@@ -4,11 +4,11 @@ using namespace std;
 #define endl "\n"
 int main(){
     ll n;
-    cin>>n;
+    cin >> n;
     ll s1 = 1, cnt = 0;
-    while(n >= s1){
+    while (n >= s1) {
         cnt++;
         s1++;
     }
-    cout<<cnt;
+    cout << cnt;
 }
