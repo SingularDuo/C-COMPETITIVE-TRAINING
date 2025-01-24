@@ -15,7 +15,7 @@ vector<ll> factorize(ll n) {
     return res;
 }
 
-map<string, vector<ll>> index;
+map<string, vector<ll>> I;
 
 void itgroup(ll a, ll b) {
     for (int i = a; i <= b; i++) {
@@ -38,7 +38,7 @@ void itgroup(ll a, ll b) {
                 }
             }
         }
-        index[s1].push_back(i);
+        I[s1].push_back(i);
     }
 }
 
@@ -47,7 +47,7 @@ int main() {
     cin >> a >> b;
     itgroup(a, b);
     ll cnt = 0;
-    for (auto i : index) {
+    for (auto i : I) {
         for (auto num : i.second) {
         }
         ll curr = i.second.size();
