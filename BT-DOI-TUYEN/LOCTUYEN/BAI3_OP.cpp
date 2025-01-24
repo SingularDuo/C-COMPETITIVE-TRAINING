@@ -25,18 +25,15 @@ void itgroup(ll a, ll b) {
         for (int j = 0; j < factor.size(); j++) {
             luu.insert(factor[j]);
         }
-
         for (auto x : luu) {
-            s1 = s1 + to_string(x);
+            s1 += to_string(x);
         }
-        
         if (luu.size() >= 2) {
-            for (int l = 1; l < s1.size(); l++) {
-                if (isdigit(s1[l])) {
-                    s1.insert(s1.begin() + l, ' ');
-                    l++;
-                }
+            string spaced_s1 = "";
+            for (int l = 0; l < luu.size(); l++) {
+                spaced_s1 += to_string(*next(luu.begin(), l)) + ' ';
             }
+            s1 = spaced_s1;
         }
         I[s1].push_back(i);
     }
@@ -53,6 +50,6 @@ int main() {
         ll curr = i.second.size();
         cnt += (curr*(curr-1))/2;
     }
-    cout<<cnt;
+    cout << cnt;
     return 0;
 }
