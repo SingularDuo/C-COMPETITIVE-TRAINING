@@ -84,7 +84,7 @@ string nhan(string s1, string s2) {
 }
 
 int main() {
-    init();
+    //init();
     sieve();
     ios::sync_with_stdio(false);
     cin.tie(0);

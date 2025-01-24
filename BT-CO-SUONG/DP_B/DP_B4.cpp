@@ -36,18 +36,3 @@ int main() {
 
     return 0;
 }
-
-/*
-logic theo bài SUMSEQ0, sẽ có mối liên hệ giữa các phần tử %k   == 0
-*/
-/*
-cần tìm mối liên hệ giữa các đoạn, prefix sum %k == 0
-*/
-/*
-6 5
-11 6 7 12 20 8
-*/
-/*
-10 3
-2 3 5 7 9 6 12 7 11 15
-*/

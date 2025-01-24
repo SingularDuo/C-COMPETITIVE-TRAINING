@@ -40,7 +40,8 @@ vector<string> fib(maxn, "");
 
 void fibo() {
     fib[0] = "1";
-    fib[1] = "1";    for (int i = 2; i < maxn; i++) {
+    fib[1] = "1";    
+    for (int i = 2; i < maxn; i++) {
         fib[i] = cong(fib[i - 1], fib[i - 2]);
         if (fib[i].size() > 210) break; 
     }
