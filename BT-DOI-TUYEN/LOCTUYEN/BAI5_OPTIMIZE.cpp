@@ -52,8 +52,8 @@ ll OneToX(ll x) {
 }
 
 int main() {
-    ll l = 3; 
-    ll r = 7;
+    ll l, r;
+    cin>>l>>r;   
     createlCM();      
     calculate_g(r);
     calculate_f(r);
