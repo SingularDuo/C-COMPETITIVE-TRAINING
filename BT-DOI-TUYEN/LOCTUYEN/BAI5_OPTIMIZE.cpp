@@ -2,9 +2,11 @@
 using namespace std;
 #define ll long long
 #define endl "\n"
+
 vector<ll> lcmv(43);
 vector<ll> f(43);
 vector<ll> g(43);
+
 ll nen(ll n) {
     ll cnt = 0;
     ll i = 2; 
@@ -27,17 +29,20 @@ void createlCM() {
         last = lcmv[i];
     }
 }
+
 void calculate_g(ll r) {
     for (ll i = 1; i <= 42; i++) {
         g[i] = r / lcmv[i];
     }
 }
+
 void calculate_f(ll r) {
-    for (ll i = 2; i <= 42; i++) {
-        f[i] = g[i-1] - g[i];
+    for (ll i = 1; i <= 42; i++) {
+        f[i] = g[i - 1] - g[i];
     }
 }
-ll OneTor(ll l, ll r) {
+
+ll OneToX(ll x) {
     ll cnt = 0;
     for (ll i = 2; i <= 42; i++) {
         ll fi = f[i];
@@ -48,13 +53,20 @@ ll OneTor(ll l, ll r) {
 
 int main() {
     ll l = 3; 
-    ll r = 1e18;
-
+    ll r = 7;
     createlCM();      
-    calculate_g(r);  
-    calculate_f(r);    
-
-    ll result = OneTor(l, r); 
+    calculate_g(r);
+    calculate_f(r);
+    ll cnt_r = OneToX(r);
+    if (l > 1) {
+        calculate_g(l - 1);
+        calculate_f(l - 1);
+    }
+    ll cnt_l_minus_1 = 0;
+    if (l > 1) {
+        cnt_l_minus_1 = OneToX(l - 1);
+    }
+    ll result = cnt_r - cnt_l_minus_1;
     cout << result << endl;
 
     return 0;
