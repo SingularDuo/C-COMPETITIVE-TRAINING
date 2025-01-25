@@ -20,26 +20,26 @@ ll nen(ll n) {
     return cnt;
 }
 
-void createLCM() {
+void createlCM() {
     ll last = 1;
-    for (int i = 1; i <= 42; i++) {
+    for (ll i = 1; i <= 42; i++) {
         lcmv[i] = lcm(last, i);
         last = lcmv[i];
     }
 }
-void calculate_g(int R) {
-    for (int i = 1; i <= 42; i++) {
-        g[i] = R / lcmv[i];
+void calculate_g(ll r) {
+    for (ll i = 1; i <= 42; i++) {
+        g[i] = r / lcmv[i];
     }
 }
-void calculate_f(int R) {
-    for (int i = 2; i <= 42; i++) {
+void calculate_f(ll r) {
+    for (ll i = 2; i <= 42; i++) {
         f[i] = g[i-1] - g[i];
     }
 }
-ll OneToR(int L, int R) {
+ll OneTor(ll l, ll r) {
     ll cnt = 0;
-    for (int i = 2; i <= 42; i++) {
+    for (ll i = 2; i <= 42; i++) {
         ll fi = f[i];
         cnt += fi * (nen(i) + 1); 
     }
@@ -47,14 +47,14 @@ ll OneToR(int L, int R) {
 }
 
 int main() {
-    int L = 3; 
-    int R = 7;
+    ll l = 3; 
+    ll r = 1e18;
 
-    createLCM();      
-    calculate_g(R);  
-    calculate_f(R);    
+    createlCM();      
+    calculate_g(r);  
+    calculate_f(r);    
 
-    ll result = OneToR(L, R); 
+    ll result = OneTor(l, r); 
     cout << result << endl;
 
     return 0;
