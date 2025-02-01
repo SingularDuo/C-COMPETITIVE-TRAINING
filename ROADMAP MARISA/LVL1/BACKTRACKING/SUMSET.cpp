@@ -2,26 +2,23 @@
 using namespace std;
 #define ll long long
 #define endl "\n"
+bool sumset(const vector<ll>&a, ll start_pos, ll k){
+    if(k == 0)return true;
+    if(k < 0 || start_pos == a.size())return false;
+    if(sumset(a, start_pos + 1, k - a[start_pos]))return true;
+    if(sumset(a, start_pos + 1, k))return true;
+    return false;
+}
 void sol(){
     ll n, k;
     cin>>n>>k;
-    vector<ll> v(n);
-    vector<ll> f(n, 0);
-    for(int i=0;i<n;i++) cin>>v[i];
-    f[0] = v[0];
-    for(int i = 1; i < n; i++){
-        f[i] = f[i-1] + v[i];
+    vector<ll> a(n);
+    for(int i = 0; i < n; i++)cin>>a[i];
+    if(sumset(a, 0, k)){
+        cout<<"YES";
+        return;
     }
-    for(int l = 0; l < n; l++){
-        for(int r = l; r < n; r++){
-            ll current = f[r] - f[l-1];
-            if(current == k){
-                cout<<"YES";
-                return;
-            }
-        }
-    }
-    cout<<"NO";
+    else cout<<"NO";
     return;
 }
 signed main() {
