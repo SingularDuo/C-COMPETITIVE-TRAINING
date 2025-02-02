@@ -12,10 +12,7 @@ void init() {
 }
 
 int main() {
-    init();
-    ll t;
-    cin >> t;
-    while (t--) {
+    //init();
         ll n, k;
         cin >> k >> n;
         vector<ll> a(n + 1);
@@ -36,6 +33,6 @@ int main() {
             }
         }
         cout << soluong << endl;
-    }
+
     return 0;
 }

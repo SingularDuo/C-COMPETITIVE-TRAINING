@@ -1,0 +1,2 @@
+
+    cout<countSubstrings(s);
