@@ -32,4 +32,4 @@ void sol(){
 signed main() {
     sol();
     return 0;
-}
+}//
