@@ -18,9 +18,17 @@ void genper(ll s, string a)
         cout<<endl;
         return;
     }
-    for (ll i = 1; i <= s; i++) {
-        string new_a = a + to_string(i);
-        genper(s, new_a);
+    bool used[10] = {false}; 
+    for(int i = 0; i < a.size();i++){
+        used[a[i]-'0'] = true; 
+    }
+    for (ll i = 1; i <= s; i++) { 
+        if(!used[i]){ 
+            string new_a = a + to_string(i);
+            genper(s, new_a);
+        }
+        else continue;
+        
     }
 }
 void sol(){
