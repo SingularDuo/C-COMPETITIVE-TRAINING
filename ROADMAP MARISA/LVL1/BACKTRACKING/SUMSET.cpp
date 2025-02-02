@@ -4,7 +4,7 @@ using namespace std;
 #define endl "\n"
 bool sumset(const vector<ll>&a, ll start_pos, ll k){
     if(k == 0)return true;
-    if(k < 0 || start_pos == a.size())return false;
+    if(k < 0 || start_pos >= a.size())return false;
     if(sumset(a, start_pos + 1, k - a[start_pos]))return true;
     if(sumset(a, start_pos + 1, k))return true;
     return false;
