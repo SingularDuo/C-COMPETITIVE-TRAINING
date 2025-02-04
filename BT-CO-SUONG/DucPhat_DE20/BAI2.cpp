@@ -12,8 +12,11 @@ int main(){
     long long n, k;
     cin>>n>>k;
     vector<long long> a(n);
-    for(int i = 0; i < n; i++){
-        cin>>a[i];
+    for(int i = 0; i < n; i++)cin>>a[i];
+    if(k > n){
+        while(k > n){
+            k -= n;
+        }
     }
     cout<<a[k];
 }
