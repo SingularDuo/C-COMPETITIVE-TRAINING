@@ -27,7 +27,6 @@ void sol() {
                     if(s[ik] == '#'){
                         s[ik] = s1[j];
                         break;
-                        cout<<"sik"<<" "<<s[ik]<<endl;
                     }
                 }
                 ll idx = 0;
