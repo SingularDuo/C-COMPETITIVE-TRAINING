@@ -1,6 +1,6 @@
-        }
-    }
-    for(int i = 0; i < s.size(); i++){
-        if(s[i] == '#'){
-            s[i] = replace[0]; 
-            break;
+5
+one fat cat
+two big elephants
+three small bats
+four long snakes
+five thin bears

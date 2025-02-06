@@ -61,7 +61,7 @@ string nhan(string s1, string s2) {
 }
 
 int main() {
-    init();
+    //init();
     str s1, s2;
     getline(cin, s1);
     int n;

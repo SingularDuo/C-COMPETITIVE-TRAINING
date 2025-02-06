@@ -1,8 +1,17 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-int main(){
-    for(int i = 1; i <= 100; i++){
-        cout<<i<<" " <<"BO BEO NHAT THE GIOI"<<endl;
-    }
+#define ll long long
+#define endl "\n"
+void sol(){
+    ll n;
+    cin>>n;
+    int t[n];
+    int m[n];
+    for(int i = 0; i < n; i++)cin>>t[i];
+    for(int i = 0; i < n; i++)cin>>m[i];
+    return;
+}
+signed main() {
+    sol();
     return 0;
 }

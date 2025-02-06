@@ -41,7 +41,7 @@ string cong(string a, string b) {
 }
 
 int main() {
-    init();
+    //init();
     str s1, s2;
     getline(cin, s1);
     getline(cin, s2);

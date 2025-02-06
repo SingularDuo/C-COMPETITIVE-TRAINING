@@ -3,47 +3,48 @@ using namespace std;
 #define ll long long
 #define endl "\n"
 
+void init(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+}
+
 int main() {
+    init();
     int n;
     cin >> n;
-    cin.ignore(); 
+    cin.ignore();
 
-    vector<string> A(n);
+    vector<string> a(n);
     for (int i = 0; i < n; i++) {
-        getline(cin, A[i]); 
+        getline(cin, a[i]);
     }
     string header1 = "Lookattheanimals,dancing,dancing,";
     string header2 = "Lookattheanimals,dancingtothemusic";
     string add = ",dancing, dancing,";
     string comma = ",";
-    int cnt = 0;
+    ll cnt = 0;
     ll comma_val = 0;
     ll dancing_val = 0;
-    ll head2_val = 0;
     for(char c : add) if(isalpha(c)) dancing_val++;
-    for (char c : header2) if (isalpha(c)) head2_val++;
-    for(char c : comma) if(isalpha(c)) comma_val ++;
-    for (char c : header1) if (isalpha(c)) cnt++;
+    ll head2_val = header2.size() - 1;
+    cnt += header1.size() - 3;
     cnt += head2_val;
     vector<ll> alpha_sum(n);
     for (int i = 0; i < n; i++) {
-        for (char c : A[i]) {
+        for (char c : a[i]) {
             if (isalpha(c)) alpha_sum[i]++;
         }
     }
-
+    ll f = 0;
     for (int i = 0; i < n; i++) {
-        ll line_sum = 0;
-        for (int j = i; j >= 0; j--) {
-            line_sum += alpha_sum[j];
-            if (j < i) line_sum += comma_val;
-        }
-        if (i > 0) line_sum += 3;
-        cnt += line_sum + dancing_val + head2_val;
+        f += alpha_sum[i];
+        cnt += f + dancing_val + head2_val+ (i > 0 ? 3 : 0);
     }
     cout << cnt << endl;
     return 0;
 }
+
 /*
 5
 one fat cat
