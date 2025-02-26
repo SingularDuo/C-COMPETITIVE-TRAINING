@@ -1,9 +1,13 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\C-COMPETITIVE-TRAINING\\",
+  "WorkspaceRootPath": "C:\\C-COMPETITIVE-TRAINING\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\C-COMPETITIVE-TRAINING\\C\u002B\u002B A PHAT\\DUY\u1EC6T V\u00C9T_QUAY LUI_ \u0110\u1EC6 QUY\\BONES.CPP||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\C-COMPETITIVE-TRAINING\\CppProperties.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CppProperties.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\C-COMPETITIVE-TRAINING\\C\u002B\u002B A PHAT\\DUY\u1EC6T V\u00C9T_QUAY LUI_ \u0110\u1EC6 QUY\\BONES.CPP||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:C\u002B\u002B A PHAT\\DUY\u1EC6T V\u00C9T_QUAY LUI_ \u0110\u1EC6 QUY\\BONES.CPP||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -19,12 +23,25 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "BONES.CPP",
-              "DocumentMoniker": "D:\\C-COMPETITIVE-TRAINING\\C\u002B\u002B A PHAT\\DUY\u1EC6T V\u00C9T_QUAY LUI_ \u0110\u1EC6 QUY\\BONES.CPP",
-              "RelativeDocumentMoniker": "C\u002B\u002B A PHAT\\DUY\u1EC6T V\u00C9T_QUAY LUI_ \u0110\u1EC6 QUY\\BONES.CPP",
-              "ToolTip": "D:\\C-COMPETITIVE-TRAINING\\C\u002B\u002B A PHAT\\DUY\u1EC6T V\u00C9T_QUAY LUI_ \u0110\u1EC6 QUY\\BONES.CPP",
-              "RelativeToolTip": "C\u002B\u002B A PHAT\\DUY\u1EC6T V\u00C9T_QUAY LUI_ \u0110\u1EC6 QUY\\BONES.CPP",
+              "Title": "CppProperties.json",
+              "DocumentMoniker": "C:\\C-COMPETITIVE-TRAINING\\CppProperties.json",
+              "RelativeDocumentMoniker": "CppProperties.json",
+              "ToolTip": "C:\\C-COMPETITIVE-TRAINING\\CppProperties.json",
+              "RelativeToolTip": "CppProperties.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-02-14T16:25:33.025Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BONES.CPP",
+              "DocumentMoniker": "C:\\C-COMPETITIVE-TRAINING\\C\u002B\u002B A PHAT\\DUY\u1EC6T V\u00C9T_QUAY LUI_ \u0110\u1EC6 QUY\\BONES.CPP",
+              "RelativeDocumentMoniker": "C\u002B\u002B A PHAT\\DUY\u1EC6T V\u00C9T_QUAY LUI_ \u0110\u1EC6 QUY\\BONES.CPP",
+              "ToolTip": "C:\\C-COMPETITIVE-TRAINING\\C\u002B\u002B A PHAT\\DUY\u1EC6T V\u00C9T_QUAY LUI_ \u0110\u1EC6 QUY\\BONES.CPP",
+              "RelativeToolTip": "C\u002B\u002B A PHAT\\DUY\u1EC6T V\u00C9T_QUAY LUI_ \u0110\u1EC6 QUY\\BONES.CPP",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-02-06T01:47:12.601Z",
               "EditorCaption": ""

@@ -1,41 +1,30 @@
-#include <bits/stdc++.h>
+// code for fun this problem ez
+#include<bits/stdc++.h>
 using namespace std;
 #define ll long long
 #define endl "\n"
-string nhan(string s1, string s2) {
-    int n = s1.size(), m = s2.size();
-    vector<int> result(n + m, 0);
-    for (int i = n - 1; i >= 0; i--) {
-        for (int j = m - 1; j >= 0; j--) {
-            int mul = (s1[i] - '0') * (s2[j] - '0');
-            int sum = mul + result[i + j + 1]; 
-            result[i + j + 1] = sum % 10;   
-            result[i + j] += sum / 10;      
-        }
+#define fi first
+#define se second
+// no sieve cuz lazy
+bool isprime(ll n)
+{
+    if(n == 1)return false;
+    else if(n == 2 || n == 3)return true;
+    else if(n %2 == 0 || n %3 == 0)return false;
+    for(int i = 4; i*i <= n; i++)
+    {
+        if(n % i == 0)return false;
     }
-    string res = "";
-    bool leadingZero = true;
-    for (int num : result) {
-        if (num == 0 && leadingZero) continue; 
-        leadingZero = false;
-        res += to_string(num);
-    }
-    if(res.empty())return 0;
-    else return res;
+    return true;
 }
-void sol(){
-    ll n;
-    cin>>n;
-    vector<ll> a(n);
-    for(ll i = 0; i < n;i++)cin>>a[i];
-    string res = "1";
-    for(ll i = 0; i < n; i++){
-        res = nhan(res, to_string(a[i]));
+signed main()
+{
+    ll l, r;
+    cin>>l>>r;
+    // brute
+    for(ll i  = l; i <= r; i++)
+    {
+        if(isprime(i))cout<<i<<endl;
     }
-    cout<<res;
-    return;
-}
-signed main() {
-    sol();
     return 0;
 }
