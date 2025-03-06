@@ -26,7 +26,6 @@ ll change(string& s) {
     }
     return res;
 }
-
 KING_PHAT {
     fast;
     string s;

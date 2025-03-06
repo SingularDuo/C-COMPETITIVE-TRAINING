@@ -1,0 +1,1 @@
+{"name":"Local: CLIMB","url":"c:\\C-COMPETITIVE-TRAINING\\BT-CO-SUONG\\DFS\\NANGCAO\\CLIMB.cpp","tests":[{"id":1741006789714,"input":"3 3\n1 1 0\n1 2 3\n2 2 5","output":"5"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\C-COMPETITIVE-TRAINING\\BT-CO-SUONG\\DFS\\NANGCAO\\CLIMB.cpp","group":"local","local":true}

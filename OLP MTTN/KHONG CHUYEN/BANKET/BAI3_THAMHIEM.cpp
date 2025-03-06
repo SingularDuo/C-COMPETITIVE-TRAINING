@@ -25,6 +25,7 @@ void solve()
         if (!ne[i]) ne[i] = b[a[i] + 1];
     }
     int ans = 0;
+    cout<<endl;
     for (int i = 1; i <= m; i++)
     {
         if (ne[pos] < pos) ans++;

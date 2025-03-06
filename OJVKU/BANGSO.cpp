@@ -1,39 +1,35 @@
-#include<bits/stdc++.h>
+#include <iostream>
+#include <vector>
 using namespace std;
 
-int main() {
-    long long a[3][3]; 
-    map<long long, int> luu; 
-    long long val = 0;
-    for (int i = 0; i < 3; i++) {
-        long long curr = 0;
-        for (int j = 0; j < 3; j++) {
-            cin >> a[i][j];
-            curr += a[i][j];       
-            luu[a[i][j]]++;         
+const int N = 8;
+vector<pair<int, int>> pieces;
+vector<vector<bool>> board(N, vector<bool>(N, false));
+char pieceTypes[4] = {'Q', 'N', 'R', 'B'}; // Hậu, Mã, Xe, Tượng
+
+void backtrack(int placed) {
+    if (placed == 4) {
+        for (int i = 0; i < 4; i++) {
+            cout << pieceTypes[i] << "(" << pieces[i].first << ", " << pieces[i].second << ") ";
         }
-        if (i == 0) {
-            val = curr; 
-        } else if (val != curr) {
-            cout << "NO";
-            return 0;
-        }
-    }
-    if (luu.size() < 2) {
-        cout << "NO";
-        return 0;
+        cout << "\n";
+        return;
     }
 
-    for (int j = 0; j < 3; j++) {
-        long long current = 0;
-        for (int i = 0; i < 3; i++) {
-            current += a[i][j];
-        }
-        if (current != val) {
-            cout << "NO";
-            return 0;
+    for (int row = 0; row < N; row++) {
+        for (int col = 0; col < N; col++) {
+            if (!board[row][col]) { // Ô chưa có quân nào
+                board[row][col] = true;
+                pieces.push_back({row, col});
+                backtrack(placed + 1);
+                pieces.pop_back();
+                board[row][col] = false;
+            }
         }
     }
-    cout << "YES";
+}
+
+int main() {
+    backtrack(0);
     return 0;
 }
