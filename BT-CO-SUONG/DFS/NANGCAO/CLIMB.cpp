@@ -6,7 +6,7 @@ using namespace std;
 #define fast ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define endl '\n'
 
-const int maxn = 1005;  // Giới hạn nhỏ hơn để tránh tràn bộ nhớ
+const int maxn = 1005;
 int n, m;
 int ans = 0;
 vector<vector<int>> path;  
