@@ -1,31 +1,34 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define int long long
-void genperm(int n, int k, vector<int>& current, vector<bool>& used) {
-    if (current.size() == k) { 
-        for (int num : current) cout << num << " ";
-        cout << "\n";
+
+#define ll long long
+#define endl "\n"
+
+int n, k;
+vector<ll> current;
+
+void print(vector<ll>& a) {
+    for (auto i : a) cout << i << " ";
+    cout << endl;
+}
+
+void gen(int idx) {
+    if (current.size() == k) {
+        print(current);
         return;
     }
-    
-    for (int i = 1; i <= n; i++) {
-        if (!used[i]) { 
-            used[i] = true;
-            current.push_back(i);
-            genperm(n, k, current, used);
-            current.pop_back();
-            used[i] = false;
-        }
+    for (int i = idx + 1; i <= n; i++) {
+        current.push_back(i);
+        gen(i);
+        current.pop_back();
     }
 }
 
-signed main() {
-    int n, k;
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
     cin >> n >> k;
-    
-    vector<int> current;
-    vector<bool> used(n + 1, false); 
-    genperm(n, k, current, used);
-    
+    gen(0);
     return 0;
 }
