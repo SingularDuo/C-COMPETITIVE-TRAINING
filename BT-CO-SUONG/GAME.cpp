@@ -5,8 +5,8 @@ using namespace std;
 #define fast ios_base::sync_with_stdio(0);
 #define endl "\n"
 void init(){
-    freopen("BAI1.INP", "r", stdin);
-    freopen("BAI1.OUT", "w", stdout);
+    freopen("GAME.INP", "r", stdin);
+    freopen("GAME.OUT", "w", stdout);
     fast;
 }
 signed main()

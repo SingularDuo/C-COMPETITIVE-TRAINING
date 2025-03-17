@@ -1,0 +1,1 @@
+{"name":"Local: SQRTI","url":"c:\\C-COMPETITIVE-TRAINING\\DETHITHU\\SQRTOJ_DAY3\\SQRTI.cpp","tests":[{"id":1741663338563,"input":"6 3\n1 2 4 8 16 32 \n2 4\n1 5\n3 6","output":"1\n4\n2\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\C-COMPETITIVE-TRAINING\\DETHITHU\\SQRTOJ_DAY3\\SQRTI.cpp","group":"local","local":true}

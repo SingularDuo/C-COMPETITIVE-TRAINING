@@ -26,19 +26,11 @@ void xucxac(ll dice, vector<ll>& a) {
 }
 
 king {
-    ll s1, s2, s3;
-    cin >> s1 >> s2 >> s3;
-    vector<ll> mat = {s1, s2, s3};
-    
-    xucxac(0, mat);
+    if( a >= 0 &&  a % 2 == 0)
+    {
 
-    ll max_freq = 0, best_value = LLONG_MAX;
-    for (auto &p : cnt) {
-        if (p.second > max_freq || (p.second == max_freq && p.first < best_value)) {
-            max_freq = p.second;
-            best_value = p.first;
-        }
     }
+    if( a >= 0 || a % 2 == 0)
     
     cout << best_value << endl;
 }

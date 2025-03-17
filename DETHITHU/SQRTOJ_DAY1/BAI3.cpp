@@ -16,21 +16,7 @@ ll res = 0;
 vector<ll> current;
 vector<int> cnt;
 vector<bool> mark(n * x, false);
-/*void gen(ll value, ll idx)
-{
-    if(idx >= n)return;
-    if(value != 0 && value <= x && mark[value] == false)
-    {
-        res++;
-        mark[value] = true;
-    }
-    for(int i = idx; i < n; i++)
-    {
-        gen(value * a[i], i);
-    }
-}*/
-
-void gen_nor(ll idx)
+/*void gen_nor(ll idx)
 {
     if(!current.empty()){
         ll val = 1;
@@ -43,12 +29,25 @@ void gen_nor(ll idx)
         }
         else return;
     }
-    for(int i = idx; i < n; i++)
+    for(int i = idx; i < n; i++)n
     {
         ll currval = a[i];
         current.push_back(currval);
         gen_nor(i+1);
         current.pop_back();
+    }
+}*/
+// 2 1 3 4 5
+void gen(ll value, ll idx, ll cnt)
+{
+    if (value > x) return;
+    if (cnt > 0) 
+    {
+        res++;
+    }
+    for (int i = idx; i < n; i++)
+    {
+        gen(value * a[i], i + 1, cnt+1); 
     }
 }
 signed main()
@@ -61,18 +60,18 @@ signed main()
     for(int i = 0; i < n; i++)
     {
         cin>>a[i];
+        if(a[i] == 1)cnt1++;
     }
     if(cnt1 == n){ // sub2
-        ll ans = 0;
-        n--;
-        ll start = 1;
-        while(n--){
-            start = start * 2 + 1;
+        ll res = 1;
+        for(int i = 1; i <= n; i++)
+        {
+            res = (res*2)%MOD;
         }
-        cout<<start%MOD<<endl;
+        cout<<res-1;
         return 0;
     }
-    gen_nor(0);
-    cout<<cnt.size()%MOD;
+    gen(1,0,0);
+    cout<<res%MOD;
 
 }

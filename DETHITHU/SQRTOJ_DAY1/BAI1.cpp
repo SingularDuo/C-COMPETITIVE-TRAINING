@@ -15,9 +15,7 @@ signed main() {
     fast;
     freopen("WOOD.INP", "r", stdin);
     freopen("WOOD.OUT", "w", stdout);
-
     cin >> a >> b >> n >> m;
-
     if (n == 1 && m == 1) {
         if (a == b) {
             cout << 2;
@@ -39,8 +37,7 @@ signed main() {
             cout << n * 2 + 1;
         }
         return 0;
-    }
-
+    }                                            
     set<int> cnt;
     for (int i = 0; i <= n; i++) {
         for (int j = 0; j <= m; j++) {
@@ -48,7 +45,6 @@ signed main() {
             cnt.insert(current);
         }
     }
-
     cout << (cnt.size() - 1) % MOD;
     return 0;
 }

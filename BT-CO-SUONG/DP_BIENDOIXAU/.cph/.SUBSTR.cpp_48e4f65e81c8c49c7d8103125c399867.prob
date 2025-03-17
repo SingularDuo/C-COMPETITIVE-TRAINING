@@ -1,0 +1,1 @@
+{"name":"Local: SUBSTR","url":"c:\\C-COMPETITIVE-TRAINING\\BT-CO-SUONG\\DP_BIENDOIXAU\\SUBSTR.cpp","tests":[{"id":1742097294246,"input":"abcdef gh yidgh2 1 ydsi 34 fd","output":"3\n15\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\C-COMPETITIVE-TRAINING\\BT-CO-SUONG\\DP_BIENDOIXAU\\SUBSTR.cpp","group":"local","local":true}

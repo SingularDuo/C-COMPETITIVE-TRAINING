@@ -1,3 +1,4 @@
+
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
@@ -46,7 +47,7 @@ int BFS(int r, int c) {
 }
 
 signed main() {
-    init();
+    //init();
     fast;
     cin >> n >> m;
     grid.assign(n, vector<int>(m));
