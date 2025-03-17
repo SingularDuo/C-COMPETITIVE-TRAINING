@@ -7,8 +7,9 @@ using namespace std;
 #define fast ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define endl '\n'
 
-int dx[8] = {-2, -2, -1, 1, 2, 2, 1, -1};  
-int dy[8] = {-1, 1, 2, 2, 1, -1, -2, -2};  
+int dx[]={-2,-2,-1,-1,1,1,2,2};
+int dy[]={-1,1,-2,2,-2,2,-1,1};
+  
 
 int n, m;
 int need = 1;
