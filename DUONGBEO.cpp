@@ -1,46 +1,41 @@
-// this is for all 9A11 girls
-#include<bits/stdc++.h>
+#include <iostream>
+#include <vector>
 using namespace std;
-int main()
-{
-    // this is how boys love you guy can be presented
-        double x, y, size = 10;
-    string message(" CHUC MUNG 8/3 ");
-    int print_line = 4;
-    if (message.length() % 2 != 0) message += " ";
-    for (x = 0; x < size; x++)
-    {
-        for (y = 0; y <= 4 * size; y++)
-        {
-            double dist1 = sqrt(pow(x - size, 2) + pow(y - size, 2));
-            double dist2 = sqrt(pow(x - size, 2) + pow(y - 3 * size, 2));
 
-            if (dist1 < size + 0.5 || dist2 < size + 0.5) {
-                cout << "V";
-            }
-            else cout << " ";
-        }
-        cout << "\n";
-    }
-    for (x = 1; x < 2 * size; x++)
-    {
-        for (y = 0; y < x; y++) cout << " ";
+// Hàm quay lui để in các cách chọn
+void generateCombinations(int roses, int daisies, int k, int h, vector<int>& combination) {
+    if (h > roses || (k - h) > daisies) return; // Kiểm tra tính hợp lệ
 
-        for (y = 0; y < 4 * size + 1 - 2 * x; y++)
-        {
-            if (x == print_line) {
-                int idx = y - (4 * size - 2 * x - message.length()) / 2;
-                if (idx < message.length() && idx >= 0) {
-                    cout << message[idx];
-                }
-                else cout << "V";
-            }
-            else cout << "V";
-        }
+    if (h + combination.size() == k) { // Điều kiện dừng khi hoàn thành lựa chọn
+        for (int i = 0; i < h; ++i) cout << "Rose ";
+        for (int i = 0; i < (k - h); ++i) cout << "Daisy ";
         cout << endl;
+        return;
     }
 
-    cout << "             FROM 9A11 BOYS\n";
+    // Thử thêm một bông hồng
+    combination.push_back(1); // 1 biểu thị bông hồng
+    generateCombinations(roses, daisies, k, h + 1, combination);
+    combination.pop_back(); // Lùi lại để thử trường hợp khác
+
+    // Thử thêm một bông cúc
+    combination.push_back(0); // 0 biểu thị bông cúc
+    generateCombinations(roses, daisies, k, h, combination);
+    combination.pop_back(); // Lùi lại để thử trường hợp khác
+}
+
+int main() {
+    int roses, daisies, k;
+    cout << "Nhập số lượng hoa hồng: ";
+    cin >> roses;
+    cout << "Nhập số lượng hoa cúc: ";
+    cin >> daisies;
+    cout << "Nhập số lượng hoa cần bốc: ";
+    cin >> k;
+
+    vector<int> combination; // Lưu trạng thái
+    cout << "Các cách chọn hoa:\n";
+    generateCombinations(roses, daisies, k, 0, combination);
 
     return 0;
 }

@@ -13,26 +13,27 @@ KING_PHAT
     cin>>n;
     vector<ll> a(n);
     int minn = LLONG_MAX;
+    int max = maxxxx();
     for(int i =0; i < n; i++)
     {
         cin>>a[i];
         minn = min(minn, a[i]);
     }
     sort(a.begin(), a.end());
-    for(auto i : a)cout<<i<<" ";
-    cout<<endl;
-    int res = 0;
-    
-    for(int i = 0; i < n;i++)
+    vector<ll> sorted_A(n);
+    for(int i = 0; i < n; i++)
     {
-        if(a[i] != minn)
-        {
-            res++;
-            if(a[i] < minn)minn = a[i];
-        
-            
-        }
+        sorted_A[i] = minn;
         minn++;
+    }
+    int res = 0;
+    for(int i = 0; i < n; i++)
+    {
+        if(a[i] != sorted_A[i])res++;
     }
     cout<<res;
 }
+// count()
+// 6 6 7 7 8 9 10 11 11
+// 6 7 8 9 10 11 12 13 14 day kq
+// 

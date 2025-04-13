@@ -1,47 +1,53 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
-#define int long long
 #define ll long long
-#define KING_PHAT signed main()
-#define fast ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-#define endl '\n'
-
-KING_PHAT
+#define int long long
+int compute[38];
+void precompute()
 {
-    fast;
-    int n;
-    cin >> n;
-    vector<ll> a(n);
-    map<int, int> counting;
-    for(int i = 0; i < n; i++){
-        cin>>a[i];
-        counting[a[i]]++;
-    }
-
-    int q; 
-    cin >> q;
-    vector<pair<ll, ll>> d(q);
-    for(int i = 0; i < q; i++) cin >> d[i].first >> d[i].second;
-    vector<ll> precompute(n);
-    precompute[0] = 1;
-    counting[a[0]]--;
-    for(int i = 1; i < n; i++)
+    compute[0] = 1;
+    for(int i = 1; i <= 37; i++)
     {
-        
+        compute[i] = pow(3, i);
     }
-    if(n <= pow(10, 4) && q <= pow(10, 5))
+}
+int res = 0;
+void gen(int n, int idx, int sum)
+{
+    if(res == 1)return;
+    if(sum > n)return;
+    if(sum == n)
     {
-        for(int i = 0; i < q; i++)
+        res = 1;
+        return;
+    }
+    for(int i = idx; i <= 37; i++)
+    {
+        gen(n, i+1, sum + compute[i]);
+    }
+}
+signed main()
+{
+    precompute();
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n;
+        cin>>n;
+        gen(n, 0, 0);
+        if(res == 1)
         {
-            int start = d[i].first - 1, end = d[i].second - 1;
-            set<int> current;
-            for(int j = start; j <= end; j++)
-            {
-                current.insert(a[j]);
-            }
-            cout << current.size() << endl;
+            cout<<"TRUE"<<endl;
+            res = 0;
+            continue;
+        }
+        else{
+            cout<<"FALSE"<<endl;
+            res = 0;
+            continue;
         }
     }
-    
-    return 0;
 }
+
+

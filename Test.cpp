@@ -1,36 +1,21 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-#define ll long long
 #define int long long
-vector<ll> uoc(int x)
+#define ll long long
+#define KING_PHAT signed main()
+#define fast ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define endl '\n'
+
+KING_PHAT
 {
-    vector<ll> res;
-    for(int i = 1; i < x; i++)
+    fast;
+    int t;
+    cin >> t;
+    while (t--)
     {
-        if(x % i == 0) res.push_back(i);
+        double n;
+        cin >> n; 
+        double berries_needed = ceil(n * 4 / 3);
+        cout << berries_needed << endl;
     }
-    res.push_back(x);
-    return res;
-}
-signed main()
-{
-    int n;
-    cin>>n;
-    vector<ll> a(n);
-    for(int i = 0 ; i < n; i++)cin>>a[i];
-    map<int, int> cnt;
-    for(int i = 0; i < n; i++)
-    {
-        vector<ll> current = uoc(a[i]);
-        for(auto j : current)cnt[j]++;
-    }
-    ll maxx = LLONG_MIN;
-    for(auto& i : cnt)
-    {
-        if(i.second == n - 1)
-        {
-            maxx = max(maxx, i.first);
-        }
-    }
-    cout<<maxx;
 }

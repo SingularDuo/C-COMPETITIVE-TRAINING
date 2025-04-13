@@ -1,0 +1,1 @@
+{"name":"Local: QGCD","url":"c:\\C-COMPETITIVE-TRAINING\\BT-CO-SUONG\\SEGMENT_TREE\\QGCD.cpp","tests":[{"id":1744371978461,"input":"3 3\n1 2 3\n1 1 4\n2 1 2\n2 1 3","output":"2\n1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\C-COMPETITIVE-TRAINING\\BT-CO-SUONG\\SEGMENT_TREE\\QGCD.cpp","group":"local","local":true}
