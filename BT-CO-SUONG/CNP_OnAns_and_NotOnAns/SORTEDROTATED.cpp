@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 #define int long long
 #define ll long long
 #define KING_PHAT signed main()
@@ -8,67 +9,76 @@ using namespace std;
 
 void init()
 {
-    freopen("SORTEDROTATED.txt", "r", stdin);
+    freopen("SORTEDROTATED.inp", "r", stdin);
     freopen("SORTEDROTATED.out", "w", stdout);
     fast;
 }
+
 KING_PHAT
 {
     init();
     fast;
     int t;
-    cin>>t;
-    while(t--)
+    cin >> t;
+    while (t--)
     {
         int n;
-        cin>>n;
+        cin >> n;
         vector<int> a(n);
-        for(int  i = 0; i < n; i++)cin>>a[i];
+        for (int i = 0; i < n; i++)cin >> a[i];
         int x;
-        cin>>x;
+        cin >> x;
         vector<ll> trai, phai;
         ll stop = 0;
-        for(int i = 0; i < n; i++)
+
+        for (int i = 0; i < n; i++)
         {
-            if(a[i] < a[i-1])
+            if (i > 0 && a[i] < a[i - 1])
             {
                 stop = i;
                 break;
             }
             trai.push_back(a[i]);
         }
-        for(int i = stop; i < n; i++)
+
+        for (int i = stop; i < n; i++)
         {
             phai.push_back(a[i]);
         }
-        if(x <= trai[trai.size()-1] && x >= trai[0])
+
+        if (!trai.empty() && x <= trai.back() && x >= trai.front())
         {
-            int l = 0, r = trai.size()-1;
-            while(l < r)
+            int l = 0, r = trai.size() - 1;
+
+            while (l < r)
             {
-                int mid = (l+r)/2;
-                if(trai[mid] >= x)r = mid;
-                else l = mid + 1;
-            }   
-            if(a[l] != x)
+                int mid = (l + r) / 2;
+                if (trai[mid] >= x)
+                    r = mid;
+                else
+                    l = mid + 1;
+            }
+
+            if (l < trai.size() && trai[l] == x)
             {
-                cout<<-1<<endl;
+                cout << l << endl;
             }
             else
             {
-                cout<<l<<endl;
+                cout << -1 << endl;
             }
         }
-        else{
+        else
+        {
             auto it = lower_bound(phai.begin(), phai.end(), x);
-            if(it == phai.end())
+
+            if (it == phai.end() || *it != x)
             {
-                cout<<-1<<endl;
+                cout << -1 << endl;
             }
             else
             {
-                cout<<it - phai.begin() + stop<<endl;
-
+                cout << (it - phai.begin() + stop) << endl;
             }
         }
     }

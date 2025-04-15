@@ -7,8 +7,8 @@ using namespace std;
 #define endl '\n'
 void init()
 {
-    freopen("TKNP4.txt", "r", stdin);
-    freopen("TKNP4.txt", "w", stdout);
+    freopen("Countx.inp", "r", stdin);
+    freopen("Countx.out", "w", stdout);
 
 }
 KING_PHAT
