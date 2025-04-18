@@ -1,0 +1,1 @@
+{"name":"Local: PREFER","url":"c:\\C-COMPETITIVE-TRAINING\\BT-CO-SUONG\\CNP_OnAns_and_NotOnAns\\PREFER.cpp","tests":[{"id":1744959016946,"input":"5\n7 2 4 5 3\n2\n1 4\n3 10","output":"3\n4"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\C-COMPETITIVE-TRAINING\\BT-CO-SUONG\\CNP_OnAns_and_NotOnAns\\PREFER.cpp","group":"local","local":true}

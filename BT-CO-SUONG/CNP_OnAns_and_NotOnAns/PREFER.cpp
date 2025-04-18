@@ -9,14 +9,14 @@ void init()
     fast;
 }
 int main() {
-
+    init();
     int n;
     cin >> n;
     vector<long long> a(n);
     for (int i = 0; i < n; i++) {
         cin >> a[i];
     }
-    sort(a.begin(), a.end()); 
+    sort(a.begin(), a.end());
 
     int q;
     cin >> q;
