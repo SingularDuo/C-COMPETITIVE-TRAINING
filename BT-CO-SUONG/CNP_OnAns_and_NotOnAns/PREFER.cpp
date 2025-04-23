@@ -9,7 +9,7 @@ void init()
     fast;
 }
 int main() {
-    init();
+    //init();
     int n;
     cin >> n;
     vector<long long> a(n);
