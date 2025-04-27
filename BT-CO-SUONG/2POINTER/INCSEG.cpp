@@ -7,37 +7,34 @@ using namespace std;
 #define endl '\n'
 #define vec(type, a, size, value) vector<type> a(size, value);
 #define all(x) x.begin(), x.end()
+#define I_O(input_name, output_name) freopen((string(input_name) + ".inp").c_str(), "r", stdin); freopen((string(output_name) + ".out").c_str(), "w", stdout); fast;
 bool multitest = false;
 void init()
 {
-    freopen("SUMLES.inp", "r", stdin);
-    freopen("SUMLES.out", "w", stdout);
+    freopen("input.inp", "r", stdin);
+    freopen("output.out", "w", stdout);
     fast;
 }
 void sol()
-{
-    int n, s;
-    cin >> n >> s;
-    vec(ll, a,n,0);
-    for (int i = 0; i < n; i++) cin >> a[i];
-    int l = 0, current = 0, res = 0;
-    for (int r = 0; r < n; r++)
     {
-        current += a[r];
-        while (current > s && l <= r)
+        int n;
+        cin>>n;
+        vec(ll,a,n,0);
+        for(int i = 0; i < n; i++)cin>>a[i];
+        int res = 0,l=0;
+        for(int r = 0; r < n-1; r++)
         {
-            current -= a[l];
-            l++;
+            if(a[r] < a[r-1])l = r;
+            res = max(res, r - l + 1);
         }
-        res = max(res, r - l + 1);
+        cout<<res;
     }
-    cout << res << endl;
-}
-KING_PHAT
+    KING_PHAT
 {
     // set state for multitest
     // multitest = true;
-    init();
+    //set state for I/O style
+    I_O("INCSEG", "INCSEG");
     fast;
     if (multitest)
     {

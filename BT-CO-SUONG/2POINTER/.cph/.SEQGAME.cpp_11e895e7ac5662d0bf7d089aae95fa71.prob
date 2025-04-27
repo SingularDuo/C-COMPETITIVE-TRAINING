@@ -1,0 +1,1 @@
+{"name":"Local: SEQGAME","url":"c:\\C-COMPETITIVE-TRAINING\\BT-CO-SUONG\\2POINTER\\SEQGAME.cpp","tests":[{"id":1745570730247,"input":"3 4 2\n1 3 2\n-1 5 3 1\n2 9","output":"0\n1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\C-COMPETITIVE-TRAINING\\BT-CO-SUONG\\2POINTER\\SEQGAME.cpp","group":"local","local":true}

@@ -1,0 +1,1 @@
+{"name":"Local: SEGMENT","url":"c:\\C-COMPETITIVE-TRAINING\\BT-CO-SUONG\\2POINTER\\SEGMENT.cpp","tests":[{"id":1745582404927,"input":"10\n1 2 -1 2 3 -4 5 -2 19 -145","output":"5 10"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\C-COMPETITIVE-TRAINING\\BT-CO-SUONG\\2POINTER\\SEGMENT.cpp","group":"local","local":true}
