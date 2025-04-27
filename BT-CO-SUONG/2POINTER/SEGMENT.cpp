@@ -12,36 +12,32 @@ bool multitest = false;
 
 void sol()
 {
-    int n;
-    cin >> n;
+    int n, k;
+    cin >> n >> k;  
     vec(ll, a, n, 0);
     for (int i = 0; i < n; i++) cin >> a[i];
-    int l = 0, maxx = 0, start = 0, end = 0;
-
-    for (int r = 1; r < n; r++) {
-        //cout<<"checking "<<a[r]<<" "<<a[r-1]<<" ans "<<a[r]*a[r-1]<<endl;
-        if (a[r] * a[r - 1] >= 0) {
-            l = r;
-        }
-        if (r - l + 1 > maxx) {
-            maxx = r - l + 1;
-            start = l;
-            end = r;
-            //cout<<a[start]<<" "<<a[end]<<endl;
+    
+    ll res = 0;
+    for (int i = 0; i < n; i++)
+    {
+        ll r = i, minn = a[i], maxx = a[i]; 
+        while (r < n && maxx - minn <= k)   
+        {
+            minn = min(minn, a[r]);
+            maxx = max(maxx, a[r]);          
+            if (maxx - minn <= k) res++;
+            r++;
         }
     }
-
-    cout << start + 1 << " " << end + 1 << endl; 
+    cout << res << endl; 
+    return;
 }
 
 KING_PHAT
 {
-    multitest = false;
-    // multitest = true;
     I_O("SEGMENT", "SEGMENT");
-
+    multitest = false;
     fast;
-
     if (multitest)
     {
         int t;
@@ -55,6 +51,5 @@ KING_PHAT
     {
         sol();
     }
-
     return 0;
 }

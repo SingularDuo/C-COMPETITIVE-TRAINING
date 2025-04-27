@@ -10,38 +10,51 @@ using namespace std;
 #define I_O(input_name, output_name) freopen((string(input_name) + ".inp").c_str(), "r", stdin); freopen((string(output_name) + ".out").c_str(), "w", stdout); fast;
 bool multitest = false;
 
-void sol() {
-    int n, k;
-    cin >> n >> k;
+void sol()
+{
+    int n;
+    cin >> n;
     vec(ll, a, n, 0);
     for (int i = 0; i < n; i++) cin >> a[i];
+    int l = 0, maxx = 0, start = 0, end = 0;
 
-    int res = 0, l = 0;
-    multiset<int> window;
-    // ** Su dung sliding window de xu li **
-    for (int r = 0; r < n; r++) {
-        window.insert(a[r]);
-        while (*window.rbegin() - *window.begin() > k) {
-            window.erase(window.find(a[l]));
-            l++;
+    for (int r = 1; r < n; r++) {
+        //cout<<"checking "<<a[r]<<" "<<a[r-1]<<" ans "<<a[r]*a[r-1]<<endl;
+        if (a[r] * a[r - 1] >= 0) {
+            l = r;
         }
-
-        res += (r - l + 1);
+        if (r - l + 1 > maxx) {
+            maxx = r - l + 1;
+            start = l;
+            end = r;
+            //cout<<a[start]<<" "<<a[end]<<endl;
+        }
     }
 
-    cout << res << endl;
+    cout << start + 1 << " " << end + 1 << endl; 
 }
 
-KING_PHAT {
+KING_PHAT
+{
+    multitest = false;
+    // multitest = true;
+    I_O("SEGMENT", "SEGMENT");
+
     fast;
-    if (multitest) {
+
+    if (multitest)
+    {
         int t;
         cin >> t;
-        while (t--) {
+        while (t--)
+        {
             sol();
         }
-    } else {
+    }
+    else
+    {
         sol();
     }
+
     return 0;
 }

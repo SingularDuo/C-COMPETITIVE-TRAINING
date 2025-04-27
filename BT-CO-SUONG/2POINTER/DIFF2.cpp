@@ -29,12 +29,26 @@ void sol() {
         }
         sort(a[i].begin(), a[i].end()); 
     }
-    for (int i = 0; i < n; i++) {
+    /*for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             cout << a[i][j] << " ";
         }
         cout << endl;
-    }
+    }*/
+   ll res = LLONG_MAX;
+   for(int i = 0; i < n; i++)
+   {
+        int x = a[0][i];
+        int minn = LLONG_MAX;
+        for(int j = 1; j < n; j++)
+        {
+            auto it = upper_bound(a[j].begin(), a[j].end(), x);
+            if(it != a[j].begin())it--;
+            minn = min(minn, *it );
+        }
+        res = min(res, abs(x - minn));
+   }
+   cout<<res;
 }
 
 KING_PHAT {

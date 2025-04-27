@@ -9,38 +9,40 @@ using namespace std;
 #define all(x) x.begin(), x.end()
 #define I_O(input_name, output_name) freopen((string(input_name) + ".inp").c_str(), "r", stdin); freopen((string(output_name) + ".out").c_str(), "w", stdout); fast;
 bool multitest = false;
-
-void sol() {
-    int n, k;
-    cin >> n >> k;
-    vec(ll, a, n, 0);
-    for (int i = 0; i < n; i++) cin >> a[i];
-
-    int res = 0, l = 0;
-    multiset<int> window;
-    // ** Su dung sliding window de xu li **
-    for (int r = 0; r < n; r++) {
-        window.insert(a[r]);
-        while (*window.rbegin() - *window.begin() > k) {
-            window.erase(window.find(a[l]));
-            l++;
-        }
-
-        res += (r - l + 1);
-    }
-
-    cout << res << endl;
-}
-
-KING_PHAT {
+void init()
+{
+    freopen("input.inp", "r", stdin);
+    freopen("output.out", "w", stdout);
     fast;
-    if (multitest) {
+}
+void sol()
+{
+    int n;
+    cin>>n;
+    if(n <= 1399)cout<<"Division 4"<<endl;
+    else if(n <= 1599)cout<<"Division 3"<<endl;
+    else if(n <= 1899)cout<<"Division 2"<<endl;
+    else cout<<"Division 1"<<endl;
+}
+KING_PHAT
+{
+    multitest = true;
+    // set state for multitest
+    // multitest = true;
+    //set state for I/O style
+    //I_O("test1", "test1");
+    fast;
+    if (multitest)
+    {
         int t;
         cin >> t;
-        while (t--) {
+        while (t--)
+        {
             sol();
         }
-    } else {
+    }
+    else
+    {
         sol();
     }
     return 0;
