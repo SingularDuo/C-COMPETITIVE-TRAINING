@@ -1,5 +1,3 @@
-
-
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
@@ -23,21 +21,17 @@ void sol()
 {
     int n;
     cin>>n;
-    map<int, int> cnt;
+    ll resx = 0, resy = 0, resz = 0;
     for(int i = 0; i < n; i++)
     {
-        int a;
-        cin>>a;
-        cnt[a]++;
+        int x,y,z;
+        cin>>x>>y>>z;
+        resx += x;
+        resy += y;
+        resz +=z;
     }
-    for(auto& i : cnt)
-    {
-        if(i.second % 2 != 0)
-        {
-            cout<<i.first;
-            return;
-        }
-    }
+    if(resx != 0 || resy != 0 || resz!=0)cout<<"NO";
+    else cout<<"YES";
 }
 KING_PHAT
 {

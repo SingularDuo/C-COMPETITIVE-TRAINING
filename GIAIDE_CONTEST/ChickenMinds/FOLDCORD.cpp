@@ -140,8 +140,8 @@ void sol()
            // cout<<endl;
         }
     }
-    for(auto& i : cnt)cout<<i<<" ";
-    cout<<endl;
+    //for(auto& i : cnt)cout<<i<<" ";
+    //cout<<endl;
     cout<<cnt.size();
 }
 

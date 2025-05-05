@@ -1,5 +1,3 @@
-
-
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
@@ -21,23 +19,30 @@ void init()
 }
 void sol()
 {
-    int n;
-    cin>>n;
-    map<int, int> cnt;
-    for(int i = 0; i < n; i++)
+    int n, x;
+    cin>>n>>x;
+    string s;
+    cin>>s;
+    vector<char> a(s.size());
+    for(int i = 0; i < s.size(); i++)
     {
-        int a;
-        cin>>a;
-        cnt[a]++;
+        a[i] = s[i];
     }
-    for(auto& i : cnt)
+    //for(auto& i : a)cout<<i<<" ";
+    while(x > 0)
     {
-        if(i.second % 2 != 0)
+        for(int i = 0; i < s.size(); i++)
         {
-            cout<<i.first;
-            return;
+            if(a[i] == 'B' && a[i + 1] == 'G')
+            {
+                swap(a[i], a[i+1]);
+                i++;
+            }
         }
+        x--;
     }
+    for(auto& i : a)cout<<i;
+
 }
 KING_PHAT
 {

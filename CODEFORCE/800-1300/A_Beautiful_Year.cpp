@@ -1,5 +1,3 @@
-
-
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
@@ -19,25 +17,36 @@ void init()
     freopen("output.out", "w", stdout);
     fast;
 }
+bool isdistinct(int x)
+{
+    string s = to_string(x);
+    vector<int> cnt(10, 0);
+    for(int i = 0; i < s.size(); i++)
+    {
+        int v = s[i] - '0';
+        //cout<<v<<endl;
+        cnt[v]++;
+    }
+    for(int i = 0; i <= 9; i++)
+    {
+        if(cnt[i] >= 2)return false;
+    }
+    return true;
+}
 void sol()
 {
-    int n;
-    cin>>n;
-    map<int, int> cnt;
-    for(int i = 0; i < n; i++)
+    int x;
+    cin>>x;
+    for(int i = x+1; i <= 9999; i ++)
     {
-        int a;
-        cin>>a;
-        cnt[a]++;
-    }
-    for(auto& i : cnt)
-    {
-        if(i.second % 2 != 0)
+        if(isdistinct(i))
         {
-            cout<<i.first;
+            cout<<i;
             return;
         }
+
     }
+
 }
 KING_PHAT
 {
