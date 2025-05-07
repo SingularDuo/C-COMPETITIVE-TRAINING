@@ -18,22 +18,76 @@ void init()
     fast;
 }
 const int MOD = 1e9+7;
-ll lcmm(int a, int b) {
-    return (a / __gcd(a, b) % MOD * (b % MOD)) % MOD;
+int highest_power(int x, int p)
+{
+    int exp = 0;
+    while(x % p == 0)
+    {
+        exp++;
+        x /= p;
+    }
+    return exp;
+}
+
+pair<int, int> pttsnt(int x)
+{
+    int max_exp = 0;
+    int max_prime = 0;
+    
+    for(int i = 2; i * i <= x; i++)
+    {
+        if(x % i == 0)
+        {
+            int exp = highest_power(x, i);
+            if(exp > max_exp)
+            {
+                max_exp = exp;
+                max_prime = i;
+            }
+            x /= pow(i, exp); 
+        }
+    }
+    
+    if(x > 1) 
+    {
+        if(1 > max_exp)
+        {
+            max_exp = 1;
+            max_prime = x;
+        }
+    }
+    
+    return {max_prime, max_exp};
+}
+ll my_pow(int n, int k)
+{
+    if(k == 0)return 1;
+    if(k == 1)return n;
+
+    ll res = my_pow(n, k/2);
+    res = res * res;
+    if(k % 2 == 1)res *= n;
+    return res;
 }
 void sol()
 {
     int n;
-    cin>>n;
+    cin >> n;
     vector<ll> a(n);
-    for(int i = 0; i < n; i++)cin>>a[i];
-    int start = a[0];
+    
+    for(int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+    ll lcm_result = a[0];
     for(int i = 1; i < n; i++)
     {
-        start = lcmm(start, a[i]);
+        ll gcd_val = __gcd(lcm_result, a[i]);
+        lcm_result = (lcm_result / gcd_val) % MOD;
+        lcm_result = (lcm_result * (a[i] % MOD)) % MOD;
     }
-    cout<<start;
-
+    
+    cout << lcm_result;
 }
 KING_PHAT
 {
