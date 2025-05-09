@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+    #include<bits/stdc++.h>
 
 using namespace std;
 
@@ -19,7 +19,6 @@ void solve() {
             i += 2;
         }
     }
-    
     cout << res << endl;
 }
 
