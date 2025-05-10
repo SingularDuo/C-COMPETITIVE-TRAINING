@@ -12,6 +12,9 @@ signed main()
     int n;
     cin>>n;
     // +3 lien tuc tu 2
+    // nhan xet: voi moi lan boc, thi cac so se cach nhau them 3^luot boc
+    // so bat dau se la so dau tien o luot truoc + 3^(luot boc - 1) ==> la so thu 2 cua day trc do
+    //  
     int add = 3;
     int start_index = 2;
     vector<ll> a(n, 0);
