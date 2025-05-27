@@ -21,7 +21,7 @@ vector<int> gen(const vector<int>& a) {
     int min_price = sub[0];
 
     for (int i = 1; i < n; i++) {
-        dp[i] = max(dp[i - 1], a[i] - min_price);
+        dp[i] = max(dp[i - 1], a[i] - min_price);           
         min_price = min(min_price, a[i]);
     }
 

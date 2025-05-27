@@ -55,7 +55,7 @@ KING_PHAT {
         }
     }
     if (op2.empty()) op2 = "+0";
-    string need = op1.substr(1), need2 = op2.substr(1);
+    string need = op1.substr(1), need2 = op2.substr(1);print
     ll num1 = change(need), num2 = change(need2);
     vector<ll> l1, l2;
     ll newend = 0;

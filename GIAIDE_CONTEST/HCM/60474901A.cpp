@@ -5,7 +5,7 @@ using namespace std;
 #define endl "\n"
 #define min(a, b) min((ll)a, (ll)b)
 #define max(a, b) max((ll)a, (ll)b)
-const int maxn = 1e6;
+const int MAXN = 1e6;
 signed main()
 {
     ios_base::sync_with_stdio(0);
@@ -16,7 +16,7 @@ signed main()
     vector<ll> a(n);
     for(int i = 0; i < n; i++)cin>>a[i];
 
-    vector<ll> last(maxn, -1);
+    vector<ll> last(MAXN + 5, -1);
     ll res = LLONG_MAX; 
     for(int i = 0; i < n; i++)
     {
@@ -29,9 +29,8 @@ signed main()
             if(i - last[a[i]] < k)
             {
                 res = min(res, a[i]);
-                last[a[i]] = i;
             }
-            else continue;
+            last[a[i]] = i;
         }
     }
     if(res == LLONG_MAX){

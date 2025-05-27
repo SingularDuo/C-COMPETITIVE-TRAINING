@@ -2,6 +2,8 @@
 using namespace std;
 #define int long long
 #define ll long long
+#define fi first
+#define se second
 #define KING_PHAT signed main()
 #define fast ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #define endl '\n'
@@ -17,8 +19,18 @@ void init()
     freopen("output.out", "w", stdout);
     fast;
 }
+ll my_pow(int n, int k, int mod = 1e9 + 7)
+{
+    if(k == 0) return 1 % mod;
+    if(k == 1) return n % mod;
+
+    ll res = my_pow(n, k/2, mod);
+    res = res * res % mod;
+    if(k % 2 == 1) res *= n;
+    return res % mod;
+}
 const int MOD = 1e9+7;
-int highest_power(int x, int p)
+int highest_power(int &x, int p)
 {
     int exp = 0;
     while(x % p == 0)
@@ -28,47 +40,7 @@ int highest_power(int x, int p)
     }
     return exp;
 }
-
-pair<int, int> pttsnt(int x)
-{
-    int max_exp = 0;
-    int max_prime = 0;
-    
-    for(int i = 2; i * i <= x; i++)
-    {
-        if(x % i == 0)
-        {
-            int exp = highest_power(x, i);
-            if(exp > max_exp)
-            {
-                max_exp = exp;
-                max_prime = i;
-            }
-            x /= pow(i, exp); 
-        }
-    }
-    
-    if(x > 1) 
-    {
-        if(1 > max_exp)
-        {
-            max_exp = 1;
-            max_prime = x;
-        }
-    }
-    
-    return {max_prime, max_exp};
-}
-ll my_pow(int n, int k)
-{
-    if(k == 0)return 1;
-    if(k == 1)return n;
-
-    ll res = my_pow(n, k/2);
-    res = res * res;
-    if(k % 2 == 1)res *= n;
-    return res;
-}
+// legendre
 void sol()
 {
     int n;
@@ -79,15 +51,29 @@ void sol()
     {
         cin >> a[i];
     }
-    ll lcm_result = a[0];
-    for(int i = 1; i < n; i++)
+
+    map<int, int> luu_tsnt; 
+    for(int i = 0; i < n; i++)
     {
-        ll gcd_val = __gcd(lcm_result, a[i]);
-        lcm_result = (lcm_result / gcd_val) % MOD;
-        lcm_result = (lcm_result * (a[i] % MOD)) % MOD;
+        int x = a[i];
+        for(int j = 2; j * j <= x; j++)
+        {
+            int exp = highest_power(x, j);
+            luu_tsnt[j] = max(luu_tsnt[j], exp);
+        }
+        if(x > 1)
+        {
+            luu_tsnt[x] = max(luu_tsnt[x], 1);
+        }
     }
-    
-    cout << lcm_result;
+
+    ll lcm_result = 1;
+    for(auto& i  : luu_tsnt)
+    {
+        lcm_result = (lcm_result * my_pow(i.fi, i.se) % MOD )%MOD ;
+    }
+
+    cout << lcm_result << endl;
 }
 KING_PHAT
 {

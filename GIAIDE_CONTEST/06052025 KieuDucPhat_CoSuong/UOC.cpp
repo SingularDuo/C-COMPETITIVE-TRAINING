@@ -17,6 +17,7 @@ void init()
     cin.tie(0);
     cout.tie(0);
 }
+#define sqrt(a) (ll)sqrt((ll)a)
 bool scp(int x)
 {
     int a = round(sqrt(x));

@@ -17,6 +17,22 @@ void init()
     freopen("output.out", "w", stdout);
     fast;
 }
+const int mxn = 31625;
+bool isprime[mxn+5];
+vector<int> prime;
+void sieve()
+{
+    memset(isprime, 1, sizeof(isprime));
+    isprime[1] = isprime[0] = false;
+    for(int i = 2; i <= mxn; i++)
+    {
+        if(isprime[i])
+        {
+            prime.push_back(i);
+            for(int j = i*i; j <= mxn; j+=i)isprime[j] = false;
+        }
+    }
+}
 const int maxn = 1e6;
 int souoc[maxn+5];
 void cnt()
@@ -31,17 +47,20 @@ void cnt()
         }
     }
 }
-int demuoc(int x)
-{
-    int res = 0;
-    for(int i = 1; i*i <= x; i++)
-    {
-        if(x%i == 0)
-        {
-            res++;
-            if(i != x/i)res++;
+int demuoc(ll n) {
+    if (n == 1) return 1;
+    vector<int> somu;
+    for (auto p : prime) {
+        int cnt = 0;
+        while (n % p == 0) {
+            n /= p;
+            cnt++;
         }
+        if (cnt) somu.push_back(cnt);
     }
+    if (n != 1) somu.push_back(1);
+    int res = 1;
+    for (auto i : somu) res *= (i + 1);
     return res;
 }
 void sol()
@@ -53,6 +72,7 @@ void sol()
 }
 KING_PHAT
 {
+    sieve();
     cnt();
     //prefix();
     

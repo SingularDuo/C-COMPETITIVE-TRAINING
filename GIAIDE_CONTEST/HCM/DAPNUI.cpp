@@ -1,59 +1,73 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
+
 #define ll long long
 #define endl "\n"
 #define int long long
-#define min(a,b) min((ll)a, (ll)b)
-#define max(a,b) max((ll)a, (ll)b)
-
 
 signed main()
 {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
-    int n;
-    cin>>n;
-    vector<int> a(n);
-    for(int i = 0; i < n; i++)cin>>a[i];
-    vector<ll> sub = a;
-    int res = 1e18*2;
+    int n; cin >> n;
+    vector<ll> a(n);
+
+    for(int i = 0; i < n; i++) cin >> a[i];
+
+    vector<ll> l_v(n), l_c(n);
+    
+
+    l_c[0] = 0;
+    l_v[0] = a[0];
+
+    for(int i = 1; i < n; i++)
+    {
+        ll v = a[i];
+        ll add = 0;
+        if (l_v[i-1] >= v)
+        {
+            add = l_v[i-1] + 1 - v;
+            v = l_v[i-1] + 1;
+        }
+        l_v[i] = v;
+        l_c[i] = l_c[i-1] + add;
+    }
+
+    vector<ll> r_v(n), r_c(n);
+    
+
+    r_c[n-1] = 0;
+    r_v[n-1] = a[n-1];
+
+    for(int i = n-2; i >= 0; i--)
+    {
+        ll v = a[i];
+        ll add = 0;
+
+        if (r_v[i+1] >= v)
+        {
+            add = r_v[i+1] + 1 - v;
+            v = r_v[i+1] + 1;
+        }
+        r_v[i] = v;
+        r_c[i] = r_c[i+1] + add;
+    }
+
+    ll res = LLONG_MaX;
     for(int i = 1; i < n-1; i++)
     {
-        ll curr = 0;
-        for(int j = 1; j < i; j++)
-        {
-            if(a[j] <= a[j-1])
-            {
-                ll v = abs(a[j] - a[j-1]) + 1;
-                curr += v;
-                a[j] += v;
-            }
-        }
-        //cout<<"curr after adjust left: "<<curr<<endl;
-        for(int j = n-2; j > i; j--)
-        {
-            if(a[j] <= a[j + 1])
-            {
-                ll v = abs(a[j] - a[j+1]) + 1;
-                curr += v;
-                a[j] += v;
-            }
-        }
-        //cout<<"curr after adjust right: "<<curr<<endl;
-        ll more = max(a[i-1], a[i+1]);
-        if(more >= a[i])
-        {
-            //cout<<"add to a[i]: "<<abs(more - a[i]) + 1<<endl;
-            curr += abs(more - a[i]) + 1;
-            a[i] += abs(more - a[i]) + 1;
-        }
-        //cout<<"curr: "<<curr<<endl;
-        //for(auto& i : a)cout<<i<<" ";
-        //cout<<endl;
-        a = sub;
+        int left_val = l_c[i-1];
+        int left_num = l_v[i-1];
+
+        int right_val = r_c[i+1];
+        int right_num = r_v[i+1];
+
+        int v = a[i];
+        v = max(v, left_num+1);
+        v = max(v, right_num+1);
+
+        ll add = v - a[i];
+        ll curr = left_val + right_val + add;
         res = min(res, curr);
-        //cout<<endl;
     }
-    cout<<res;
+
+    cout << res << endl;
 }
