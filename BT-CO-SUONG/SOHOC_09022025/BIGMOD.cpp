@@ -23,6 +23,31 @@ string chia2(string num) {
     return result.empty() ? "0" : result;
 }
 
+int binPow(int a, int b) {
+    int res = 1;
+    int x = a; 
+
+    while(b > 0) {
+        if(b % 2) res = res * a; 
+        x *= a;
+        b /= 2; 
+    }
+
+    return res; 
+}
+
+int binPow(int a, int b) {
+    if(b == 0) return 1; 
+    if(b == 1) return a;
+
+    int res = binPow(a, b / 2);
+    res = res * res; 
+
+    if(b % 2) res = res * a; 
+
+    return res; 
+} 
+
 ll calculateab2(ll amod, string b, ll Mod) {
     if (b == "0") return 1;
     if (b == "1") return amod % Mod;
