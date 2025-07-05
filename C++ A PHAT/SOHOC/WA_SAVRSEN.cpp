@@ -9,7 +9,7 @@ vector<int> prefixSum(maxn, 0);
 
 void tonguoc() {
     for (int i = 1; i < maxn; i++) {
-        for (int j = i * 2; j < maxn; j += i) {
+        for(int j = i * 2; j < maxn; j += i) {
             sumDiv[j] += i; 
         }
     }
