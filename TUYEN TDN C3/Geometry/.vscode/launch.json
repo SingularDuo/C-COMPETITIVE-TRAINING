@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": ".",
-      "program": "build/Debug/outDebug",
+      "cwd": "c:/C-COMPETITIVE-TRAINING/TUYEN TDN C3/Geometry",
+      "program": "c:/C-COMPETITIVE-TRAINING/TUYEN TDN C3/Geometry/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

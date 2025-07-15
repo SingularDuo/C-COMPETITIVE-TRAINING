@@ -1,0 +1,114 @@
+/*
+        _.-- ,.--.
+      .'   .'     /
+       @       |'..--------._
+     /      \._/              '.
+    /  .-.-                     \
+   (  /    \                     \
+   \      '.                  | #
+    \       \   -.           /
+     :\       |    )._____.'   \
+      "       |   /  \  |  \    )
+    Kduckp       |   |./'  :__ \.-'
+              '--'
+*/
+/*
+ * Author: Kduckp
+ * Generated on: 2025-07-06 21:55:31
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// ========== Type Aliases ==========
+#define int long long
+#define ll long long
+#define ull unsigned long long
+#define pii pair<int, int>
+#define vi vector<int>
+#define vii vector<pii>
+
+// ========== Short Macros ==========
+#define fi first
+#define se second
+#define pb push_back
+#define all(x) x.begin(), x.end()
+#define sz(x) (int)(x).size()
+#define si size()
+#define endl "\n"
+
+// ========== Loop Macros ==========
+#define FOR(i,n)        for (int i = 0; i < n; ++i)
+#define REP(i,a,b)      for (int i = a; i <= b; ++i)
+#define FORD(i,a,b)     for (int i = a; i >= b; --i)
+#define FORDEC(i,a,b,c) for (int i = a; i >= b; i -= c)
+
+// ========== Fast I/O ==========
+#define fast ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+// ========== Output Shortcuts ==========
+#define yes cout << "YES\n"
+#define no cout << "NO\n"
+
+// ========== Custom Macros ==========
+#define __TOISETHIVOI__ signed main()
+#define vec(a,b,c,d) vector<a> b(c,d)
+
+// ========== Constants ==========
+const int MOD = 1e9 + 7;
+const int INF = 2e18;
+const int N = 2e5 + 5;
+const int LOG = 20;
+const double PI = acos(-1);
+const double EPS = 1e-9;
+
+// ========== Debug Helper ==========
+// #define debug(x) cerr << #x << " = " << x << endl;
+
+void init() {
+  //freopen("input.inp", "r", stdin);
+  //freopen("output.out", "w", stdout);
+  fast;
+}
+int extended_euclid(int a, int b, int& s, int& t)
+{
+    if(b == 0)
+    {
+        s = 1;
+        t = 0;
+        return a;
+    }
+    int s1, t1;
+    int d = extended_euclid(b, a%b, s1, t1);
+    s = t1;
+    t = s1 - (a/b)*t1;
+    return d;
+}
+__TOISETHIVOI__ {
+    init();
+
+    // your code here
+    int t; cin>>t;
+    while(t--) {
+        int a, b, c, x, y;
+        cin >> a >> b >> c;
+        int d = extended_euclid(a, b, x, y);
+        
+        if (c % d != 0) {
+            cout << 0 << endl;
+            continue;
+        }
+
+        double x_ = x * 1.0;
+        double y_ = y * 1.0;
+
+        double min_val = ceil((-x_ * (c / (double)d)) / (b / (double)d));
+        double max_val = floor((y_ * (c / (double)d)) / (a / (double)d));
+
+        if (min_val > max_val) cout << 0 << endl;
+        else cout << (long long)(max_val - min_val + 1) << endl;
+    }
+
+
+    return 0;
+}

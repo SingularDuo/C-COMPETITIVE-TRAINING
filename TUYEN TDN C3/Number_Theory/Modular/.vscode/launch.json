@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": ".",
-      "program": "build/Debug/outDebug",
+      "cwd": "c:/C-COMPETITIVE-TRAINING/TUYEN TDN C3/Number_Theory/Modular",
+      "program": "c:/C-COMPETITIVE-TRAINING/TUYEN TDN C3/Number_Theory/Modular/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

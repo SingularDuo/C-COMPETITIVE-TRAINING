@@ -1,1 +1,0 @@
-{"name":"Local: CHESS_VM","url":"c:\\C-COMPETITIVE-TRAINING\\ONTS10_TDN\\160402025_M2C\\CHESS_VM.cpp","tests":[{"id":1744786026693,"input":"3\n1 3 5\n2 4 6\n0 10 5\n2\n1 1 2 2\n1 2 3 3\n","output":"0 5"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\C-COMPETITIVE-TRAINING\\ONTS10_TDN\\160402025_M2C\\CHESS_VM.cpp","group":"local","local":true}

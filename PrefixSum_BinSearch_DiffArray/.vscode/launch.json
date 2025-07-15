@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": ".",
-      "program": "build/Debug/outDebug",
+      "cwd": "c:/C-COMPETITIVE-TRAINING/NNTAN_PRE_HCMTST/PrefixSum_BinSearch_DiffArray",
+      "program": "c:/C-COMPETITIVE-TRAINING/NNTAN_PRE_HCMTST/PrefixSum_BinSearch_DiffArray/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

@@ -1,1 +1,0 @@
-{"name":"Local: Hai_day_con","url":"c:\\C-COMPETITIVE-TRAINING\\Hai_day_con.cpp","tests":[{"id":1740535965669,"input":"5 2\n1 3 2 1 8\n","output":"5"},{"id":1740537672815,"input":"5 1\n1 3 2 1 8","output":"7"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\C-COMPETITIVE-TRAINING\\Hai_day_con.cpp","group":"local","local":true}
