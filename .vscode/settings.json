@@ -66,6 +66,7 @@
     "set": "cpp",
     "span": "cpp",
     "string": "cpp",
-    "string_view": "cpp"
+    "string_view": "cpp",
+    "queue": "cpp"
   }
 }
