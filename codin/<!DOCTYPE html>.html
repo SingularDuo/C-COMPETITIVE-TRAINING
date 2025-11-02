@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RMQ & Binary Lifting Visualizer</title>
+  <style>
+    body{font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:16px; background:#0f172a; color:#e6eef8}
+    h1{font-size:20px;margin:8px 0}
+    .container{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .card{background:linear-gradient(180deg,#0b1220, #071226); padding:14px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,.7)}
+    .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    input, button, select, textarea{padding:6px 8px;border-radius:8px;border:1px solid #18324a;background:#071926;color:#e6eef8}
+    button{cursor:pointer}
+    .boxes{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+    .box{min-width:44px;height:40px;border-radius:6px;display:flex;align-items:center;justify-content:center;background:#072433;border:1px solid #114559}
+    .box.small{min-width:36px;height:28px;font-size:12px}
+    .level{margin-top:10px}
+    .highlight{outline:3px solid rgba(255,196,87,.25); box-shadow:0 4px 10px rgba(255,196,87,.06)}
+    .selected{outline:3px solid rgba(99,102,241,.2);}
+    .animating{box-shadow:0 0 0 6px rgba(99,102,241,.06), inset 0 0 14px rgba(99,102,241,.04)}
+    .result{margin-top:10px;font-weight:600;color:#f8e0a2}
+    svg {width:100%;height:360px}
+    .node {fill:#0b1220; stroke:#2dd4bf; stroke-width:2}
+    .nlabel{fill:#c7f9ef;font-weight:700}
+    .edge{stroke:#08323b;stroke-width:2}
+    table{width:100%;border-collapse:collapse;margin-top:8px}
+    th, td{padding:6px;border:1px solid #12474f;font-size:13px}
+    .controls{display:flex;gap:8px;flex-wrap:wrap}
+    .muted{color:#8aa6b3;font-size:13px}
+    .small{font-size:13px}
+    textarea{resize:vertical}
+  </style>
+</head>
+<body>
+  <h1>Visualizer: RMQ (Sparse Table) & Binary Lifting (LCA)</h1>
+  <div class="container">
+    <div class="card" id="rmq-card">
+      <h2>RMQ — Sparse Table</h2>
+      <div class="row controls">
+        <input id="arrInput" placeholder="Nhập mảng, ví dụ: 5 2 4 7 1 3 6 8" style="flex:1" />
+        <button id="buildArr">Build</button>
+        <button id="animateBuildArr">Animate Build</button>
+      </div>
+      <div class="muted">Nhấp vào ô để chọn L và R, hoặc nhập thủ công.</div>
+      <div class="row" style="margin-top:8px">
+        <label class="small">L:</label><input id="qL" style="width:72px" />
+        <label class="small">R:</label><input id="qR" style="width:72px" />
+        <button id="runQuery">Query</button>
+        <div class="result" id="rmqResult"></div>
+      </div>
+      <div id="arrayBoxes" class="boxes"></div>
+      <div id="levels"></div>
+    </div>
+
+    <div class="card" id="bl-card">
+      <h2>Binary Lifting — Tree & LCA</h2>
+      <div class="row controls">
+        <select id="sampleTree">
+          <option value="sample1">Sample tree 1</option>
+          <option value="sample2">Sample tree 2</option>
+        </select>
+        <button id="buildTree">Build Tree</button>
+        <button id="animateBuildBL">Animate BL Build</button>
+        <button id="loadTree">Load Tree</button>
+      </div>
+      <div style="margin-top:8px">
+        <textarea id="treeInput" placeholder="Cú pháp: dòng 1: n\ncác dòng sau: u v (một cạnh mỗi dòng)\nVí dụ:\n5\n1 2\n1 3\n3 4\n3 5" style="width:100%;height:90px;border-radius:8px;padding:8px;background:#071926;color:#e6eef8;border:1px solid #18324a"></textarea>
+      </div>
+
+      <div class="muted" style="margin-top:8px">Chọn hai node để tìm LCA; click node để điền u/v hoặc nhập trực tiếp.</div>
+      <svg id="treeSVG"></svg>
+      <div class="row" style="margin-top:8px">
+        <div class="small">u: <input id="nodeU" style="width:60px" /></div>
+        <div class="small">v: <input id="nodeV" style="width:60px" /></div>
+        <button id="findLCA">Find LCA</button>
+        <button id="animateLCA">Animate LCA</button>
+        <div class="result" id="lcaResult"></div>
+      </div>
+      <div id="upTableWrap"></div>
+    </div>
+  </div>
+
+  <script>
+    // helper
+    const sleep = (ms)=> new Promise(r=>setTimeout(r, ms));
+
+    // ============ RMQ ============
+    const arrInput = document.getElementById('arrInput');
+    const buildArr = document.getElementById('buildArr');
+    const animateBuildArr = document.getElementById('animateBuildArr');
+    const arrayBoxes = document.getElementById('arrayBoxes');
+    const levelsDiv = document.getElementById('levels');
+    const qL = document.getElementById('qL');
+    const qR = document.getElementById('qR');
+    const runQuery = document.getElementById('runQuery');
+    const rmqResult = document.getElementById('rmqResult');
+
+    let a = [];
+    let st = [];
+    let lg = [];
+
+    function makeBoxes(){
+      arrayBoxes.innerHTML = '';
+      a.forEach((v,i)=>{
+        const b = document.createElement('div'); b.className='box'; b.textContent=v; b.dataset.idx = i;
+        b.addEventListener('click', ()=>{
+          if(!qL.value) qL.value = i+1; else if(!qR.value) qR.value = i+1; else { qL.value = i+1; qR.value=''; }
+          highlightRange();
+        });
+        arrayBoxes.appendChild(b);
+      });
+    }
+
+    function buildSparse(){
+      const n = a.length;
+      lg = Array(n+1).fill(0); for(let i=2;i<=n;i++) lg[i]=lg[Math.floor(i/2)]+1;
+      const K = lg[n]+1;
+      st = Array.from({length:n}, ()=>Array(K).fill(Infinity));
+      for(let i=0;i<n;i++) st[i][0]=a[i];
+      for(let j=1;j<K;j++){
+        for(let i=0;i + (1<<j) <= n; i++){
+          st[i][j] = Math.min(st[i][j-1], st[i + (1<<(j-1))][j-1]);
+        }
+      }
+      renderLevels();
+    }
+
+    function renderLevels(){
+      levelsDiv.innerHTML='';
+      if(!st.length) return;
+      for(let j=0;j<st[0].length;j++){
+        const lvl = document.createElement('div'); lvl.className='level';
+        const title = document.createElement('div'); title.className='muted'; title.textContent = `Level ${j} (len=${1<<j})`;
+        lvl.appendChild(title);
+        const boxRow = document.createElement('div'); boxRow.className='boxes';
+        for(let i=0;i<st.length;i++){
+          if(st[i][j]===Infinity) break;
+          const b = document.createElement('div'); b.className='box small'; b.textContent = (st[i][j]===null? '...' : st[i][j]); b.dataset.i=i; b.dataset.j=j;
+          boxRow.appendChild(b);
+        }
+        lvl.appendChild(boxRow);
+        levelsDiv.appendChild(lvl);
+      }
+    }
+
+    function queryRMQ(L,R){
+      const n = a.length; if(L<1||R>n||L>R) return null;
+      const len = R-L+1; const k = lg[len];
+      const res = Math.min(st[L-1][k], st[R-(1<<k)][k]);
+      return {res,k};
+    }
+
+    function highlightRange(){
+      const boxes = Array.from(arrayBoxes.children);
+      boxes.forEach(x=>x.classList.remove('highlight'));
+      const L = parseInt(qL.value), R = parseInt(qR.value);
+      if(!L||!R) return;
+      const start = Math.min(L,R)-1, end = Math.max(L,R)-1;
+      for(let i=start;i<=end;i++) boxes[i].classList.add('highlight');
+    }
+
+    buildArr.addEventListener('click', ()=>{
+      const vals = arrInput.value.trim().split(/\s+/).map(x=>Number(x)).filter(x=>!Number.isNaN(x));
+      if(!vals.length) { alert('Nhập mảng hợp lệ'); return; }
+      a = vals; makeBoxes(); buildSparse(); rmqResult.textContent='';
+    });
+
+    runQuery.addEventListener('click', ()=>{
+      const L = parseInt(qL.value), R = parseInt(qR.value);
+      if(!L || !R){ alert('Chọn L và R'); return; }
+      const out = queryRMQ(Math.min(L,R), Math.max(L,R));
+      if(!out){ rmqResult.textContent='invalid'; return; }
+      rmqResult.textContent = 'Min = ' + out.res + ` (used k=${out.k})`;
+      // highlight corresponding level boxes
+      const levelBoxes = document.querySelectorAll('.level .box');
+      levelBoxes.forEach(x=>x.classList.remove('selected'));
+      const k = out.k; const leftIdx = Math.min(L,R)-1; const rightIdx = Math.max(L,R)-(1<<k);
+      const elems = document.querySelectorAll(`.box[data-j='${k}']`);
+      elems.forEach(x=>{ if(Number(x.dataset.i)===leftIdx || Number(x.dataset.i)===rightIdx) x.classList.add('selected'); })
+      highlightRange();
+    });
+
+    async function animateBuildSparse(){
+      const n = a.length; if(n===0){ alert('Build mảng trước'); return; }
+      lg = Array(n+1).fill(0); for(let i=2;i<=n;i++) lg[i]=lg[Math.floor(i/2)]+1;
+      const K = lg[n]+1;
+      st = Array.from({length:n}, ()=>Array(K).fill(null));
+      renderLevels();
+      // fill level 0
+      for(let i=0;i<n;i++){ st[i][0]=a[i]; renderLevels(); await sleep(160); }
+      // higher levels
+      for(let j=1;j<K;j++){
+        for(let i=0;i + (1<<j) <= n; i++){
+          const left = st[i][j-1]; const right = st[i + (1<<(j-1))][j-1];
+          st[i][j] = Math.min(left,right);
+          renderLevels(); await sleep(220);
+        }
+      }
+      rmqResult.textContent = 'Animated build complete';
+    }
+
+    animateBuildArr.addEventListener('click', ()=>{ animateBuildSparse(); });
+
+    // ============ Binary Lifting ============
+    const treeSVG = document.getElementById('treeSVG');
+    const buildTreeBtn = document.getElementById('buildTree');
+    const sampleTree = document.getElementById('sampleTree');
+    const loadTreeBtn = document.getElementById('loadTree');
+    const treeInput = document.getElementById('treeInput');
+    const nodeU = document.getElementById('nodeU');
+    const nodeV = document.getElementById('nodeV');
+    const findLCA = document.getElementById('findLCA');
+    const animateLCA = document.getElementById('animateLCA');
+    const lcaResult = document.getElementById('lcaResult');
+    const upTableWrap = document.getElementById('upTableWrap');
+
+    let adj = {};
+    let parent = {};
+    let depth = {};
+    let up = {};
+    let nodesOrder = [];
+    let N=0, LOG=0;
+
+    function sampleGraphs(id){
+      if(id==='sample1'){
+        return {n:8, edges:[[1,2],[1,3],[2,4],[2,5],[3,6],[2,7],[7,8]]};
+      }
+      return {n:9, edges:[[1,2],[1,3],[2,4],[2,5],[3,6],[3,7],[4,8],[5,9]]};
+    }
+
+    // build adjacency, parent, depth; assumes nodes labeled 1..n
+    function buildAdj(n, edges){
+      adj = {}; for(let i=1;i<=n;i++) adj[i]=[];
+      edges.forEach(e=>{ const u=e[0], v=e[1]; if(!adj[u]) adj[u]=[]; if(!adj[v]) adj[v]=[]; adj[u].push(v); adj[v].push(u); });
+      N=n; LOG = Math.ceil(Math.log2(Math.max(1,n)))+1;
+      parent = {}; depth = {}; up = {}; nodesOrder=[];
+      // if node 1 doesn't exist in adjacency (disconnected), still try to run dfs from 1..n to gather nodes
+      const visited = {};
+      function dfsStart(root){
+        if(visited[root]) return;
+        dfsBL(root, root, 0);
+      }
+      for(let i=1;i<=n;i++) if(!visited[i] && adj[i]) dfsBL(i, i, 0);
+      // build up table: use parent computed (if root parent[root]=root)
+      for(let v=1; v<=N; v++){ up[v]=Array(LOG).fill(1); up[v][0]=parent[v]===undefined? v : parent[v]; }
+      for(let j=1;j<LOG;j++){
+        for(let v=1;v<=N;v++){
+          const mid = up[v][j-1]; up[v][j] = (up[mid] && up[mid][j-1]) ? up[mid][j-1] : mid;
+        }
+      }
+    }
+
+    function dfsBL(u,p,d){
+      if(depth[u]!==undefined) return; // already visited
+      parent[u]=p; depth[u]=d; nodesOrder.push(u);
+      const neigh = adj[u]||[];
+      for(const v of neigh) if(v!==p) dfsBL(v,u,d+1);
+    }
+
+    function renderTree(){
+      const layers = {};
+      let maxDepth=0; for(const v of nodesOrder){ maxDepth=Math.max(maxDepth, depth[v]); if(!layers[depth[v]]) layers[depth[v]]=[]; layers[depth[v]].push(v); }
+      const w = treeSVG.clientWidth || 600; const h = 360; treeSVG.innerHTML='';
+      const top = 20; const layerGap = (h - 60) / (Math.max(1,maxDepth+1));
+      const positions = {};
+      for(let d=0; d<=maxDepth; d++){
+        const row = layers[d]||[]; const count = row.length; const gap = Math.max(80, w / (count+1));
+        for(let i=0;i<count;i++){ const x = Math.min(w-30, gap*(i+1)); const y = top + d*layerGap; positions[row[i]] = {x,y}; }
+      }
+      // draw edges once
+      const drawn = new Set();
+      for(let u=1; u<=N; u++){
+        for(const v of (adj[u]||[])){
+          const key = u<v? `${u}-${v}`: `${v}-${u}`;
+          if(drawn.has(key)) continue;
+          drawn.add(key);
+          const a = positions[u] || {x: Math.random()*w, y: Math.random()*h};
+          const b = positions[v] || {x: Math.random()*w, y: Math.random()*h};
+          const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+          line.setAttribute('x1',a.x); line.setAttribute('y1',a.y); line.setAttribute('x2',b.x); line.setAttribute('y2',b.y);
+          line.classList.add('edge'); treeSVG.appendChild(line);
+        }
+      }
+      // draw nodes
+      for(let v=1; v<=N; v++){
+        const p = positions[v] || {x: 30 + (v*40)%w, y: top + ((v%5)+1)*40};
+        const g = document.createElementNS('http://www.w3.org/2000/svg','g'); g.style.cursor='pointer';
+        const c = document.createElementNS('http://www.w3.org/2000/svg','circle'); c.setAttribute('cx',p.x); c.setAttribute('cy',p.y); c.setAttribute('r',18); c.classList.add('node');
+        const t = document.createElementNS('http://www.w3.org/2000/svg','text'); t.setAttribute('x',p.x); t.setAttribute('y',p.y+5); t.setAttribute('text-anchor','middle'); t.classList.add('nlabel'); t.textContent = v;
+        g.appendChild(c); g.appendChild(t);
+        g.addEventListener('click', ()=>{ if(!nodeU.value) nodeU.value=v; else if(!nodeV.value) nodeV.value=v; else { nodeU.value=v; nodeV.value=''; } });
+        treeSVG.appendChild(g);
+      }
+      renderUpTable();
+    }
+
+    function renderUpTable(){
+      upTableWrap.innerHTML='';
+      if(!up || Object.keys(up).length===0) return;
+      const tbl = document.createElement('table');
+      const thead = document.createElement('thead'); const hrow = document.createElement('tr');
+      hrow.innerHTML = '<th>v</th>' + Array.from({length:LOG},(_,i)=>`<th>2^${i}</th>`).join('');
+      thead.appendChild(hrow); tbl.appendChild(thead);
+      const tbody = document.createElement('tbody');
+      for(let v=1; v<=N; v++){
+        const row = up[v] || Array(LOG).fill('...');
+        const r = document.createElement('tr'); r.innerHTML = '<td>'+v+'</td>' + row.map(x=>' <td>'+ (x===null||x===undefined? '...' : x) +'</td>').join('');
+        tbody.appendChild(r);
+      }
+      tbl.appendChild(tbody); upTableWrap.appendChild(tbl);
+    }
+
+    function jump(u, k){
+      for(let i=0;i<LOG;i++) if(k>>i &1) u = up[u][i];
+      return u;
+    }
+
+    // Binary-lifting LCA (non-animated)
+    function lca(u,v){
+      if(depth[u] < depth[v]) [u,v]=[v,u];
+      u = jump(u, depth[u]-depth[v]);
+      if(u===v) return u;
+      for(let i=LOG-1;i>=0;i--) if(up[u][i] !== up[v][i]){ u = up[u][i]; v = up[v][i]; }
+      return parent[u];
+    }
+
+    // Animated LCA: show explicit bit-by-bit jumps (leveling then ascend)
+    async function animateLCAProcess(uOrig, vOrig){
+      if(!up || Object.keys(up).length===0){ alert('Xây up table trước (Build Tree hoặc Animate BL Build)'); return; }
+      let u = uOrig, v = vOrig;
+      // reset styles
+      treeSVG.querySelectorAll('circle').forEach(c=>c.style.stroke='#2dd4bf');
+      upTableWrap.querySelectorAll('td').forEach(td=>td.classList.remove('animating'));
+      lcaResult.textContent = '';
+
+      // ensure exist
+      if(depth[u]===undefined || depth[v]===undefined){ alert('Node không tồn tại trong cây'); return; }
+
+      if(depth[u] < depth[v]) [u,v]=[v,u];
+      let diff = depth[u] - depth[v];
+
+      lcaResult.textContent = `Leveling: bring node ${uOrig} up by ${diff} steps`;
+      // go through bits from high to low so animation matches typical code
+      for(let i=LOG-1;i>=0;i--){
+        if((diff >> i) & 1){
+          // highlight the up[u][i] cell and the node u
+          const cell = upTableWrap.querySelector(`tbody tr:nth-child(${u}) td:nth-child(${i+2})`);
+          if(cell) cell.classList.add('animating');
+          highlightNodeVisual(u, '#f97316');
+          lcaResult.textContent = `Leveling: jump ${u} -> up[${i}] = ${up[u][i]}`;
+          await sleep(700);
+          if(cell) cell.classList.remove('animating');
+          u = up[u][i];
+          highlightNodeVisual(u, '#10b981');
+          await sleep(400);
+        }
+      }
+
+      if(u === v){
+        lcaResult.textContent = `LCA = ${u} (found after leveling)`;
+        highlightNodeVisual(u, '#f59e0b');
+        return u;
+      }
+
+      lcaResult.textContent = `Searching highest different ancestors (from 2^{${LOG-1}} down) ...`;
+      for(let i=LOG-1;i>=0;i--){
+        const cellU = upTableWrap.querySelector(`tbody tr:nth-child(${u}) td:nth-child(${i+2})`);
+        const cellV = upTableWrap.querySelector(`tbody tr:nth-child(${v}) td:nth-child(${i+2})`);
+        if(cellU) cellU.classList.add('animating');
+        if(cellV) cellV.classList.add('animating');
+        await sleep(500);
+        const a = up[u][i], b = up[v][i];
+        if(a !== b){
+          lcaResult.textContent = `At 2^${i}: up[${u}][${i}] = ${a} != up[${v}][${i}] = ${b} → jump`;
+          highlightNodeVisual(u,'#f97316');
+          highlightNodeVisual(v,'#f97316');
+          await sleep(350);
+          u = a; v = b;
+          highlightNodeVisual(u,'#10b981');
+          highlightNodeVisual(v,'#10b981');
+          await sleep(350);
+        } else {
+          lcaResult.textContent = `At 2^${i}: up[${u}][${i}] = up[${v}][${i}] = ${a} → skip`;
+          await sleep(300);
+        }
+        if(cellU) cellU.classList.remove('animating');
+        if(cellV) cellV.classList.remove('animating');
+      }
+
+      lcaResult.textContent = `LCA = parent[${u}] = ${parent[u]}`;
+      highlightNodeVisual(parent[u],'#f59e0b');
+      return parent[u];
+    }
+
+    function highlightNodeVisual(id, color){ const texts = Array.from(treeSVG.querySelectorAll('text')); texts.forEach(t=>{ if(Number(t.textContent)===id){ t.previousSibling.style.stroke = color; } }); }
+
+    // animate build of up table (visual)
+    async function animateBuildUp(n, edges){
+      buildAdj(n, edges); // sets parent/depth
+      // init up with nulls
+      for(let v=1; v<=N; v++) up[v]=Array(LOG).fill(null);
+      for(let v=1; v<=N; v++) up[v][0] = parent[v]===undefined? v : parent[v];
+      renderUpTable();
+      // fill higher j with animation
+      for(let j=1;j<LOG;j++){
+        for(let v=1; v<=N; v++){
+          const mid = up[v][j-1];
+          const val = (mid && up[mid]) ? up[mid][j-1] : mid;
+          up[v][j] = val;
+          renderUpTable();
+          const cell = upTableWrap.querySelector(`tbody tr:nth-child(${v}) td:nth-child(${j+2})`);
+          if(cell) cell.classList.add('animating');
+          await sleep(180);
+          if(cell) cell.classList.remove('animating');
+        }
+      }
+    }
+
+    // UI: load tree from textbox
+    try{
+      loadTreeBtn.addEventListener('click', ()=>{
+        const text = treeInput.value.trim();
+        if(!text){ alert('Nhập cây vào hộp văn bản (hoặc dùng sample)'); return; }
+        const lines = text.split(/\n+/).map(s=>s.trim()).filter(Boolean);
+        const n = parseInt(lines[0]); if(Number.isNaN(n)){ alert('Dòng đầu phải là n (số đỉnh)'); return; }
+        const edges = [];
+        for(let i=1;i<lines.length;i++){ const parts = lines[i].split(/\s+/); if(parts.length<2) continue; const u = parseInt(parts[0]), v = parseInt(parts[1]); if(Number.isNaN(u)||Number.isNaN(v)) continue; edges.push([u,v]); }
+        buildAdj(n, edges);
+        renderTree();
+        lcaResult.textContent='Loaded custom tree';
+      });
+    }catch(e){ /* ignore */ }
+
+    // sample build & animate buttons
+    buildTreeBtn.addEventListener('click', ()=>{
+      const s = sampleGraphs(sampleTree.value);
+      buildAdj(s.n, s.edges);
+      renderTree();
+      lcaResult.textContent='';
+    });
+
+    document.getElementById('animateBuildBL').addEventListener('click', ()=>{
+      const s = sampleGraphs(sampleTree.value);
+      animateBuildUp(s.n, s.edges);
+      renderTree();
+      lcaResult.textContent='';
+    });
+
+    findLCA.addEventListener('click', ()=>{
+      const u = parseInt(nodeU.value), v = parseInt(nodeV.value);
+      if(!u||!v||u<1||v<1||u>N||v>N) { alert('Chọn node hợp lệ'); return; }
+      const ans = lca(u,v);
+      lcaResult.textContent = 'LCA = ' + ans + ' (depth ' + depth[ans] + ')';
+      highlightPath(u,v,ans);
+    });
+
+    animateLCA.addEventListener('click', ()=>{
+      const u = parseInt(nodeU.value), v = parseInt(nodeV.value);
+      if(!u||!v||u<1||v<1||u>N||v>N) { alert('Chọn node hợp lệ'); return; }
+      animateLCAProcess(u,v);
+    });
+
+    function highlightPath(u,v,anc){
+      treeSVG.querySelectorAll('circle').forEach(c=>c.style.stroke='#2dd4bf');
+      let x=u; while(x!==anc){ highlightNode(x); x = parent[x]; if(x===undefined) break; }
+      highlightNode(anc);
+      x=v; while(x!==anc){ highlightNode(x); x = parent[x]; if(x===undefined) break; }
+    }
+    function highlightNode(id){ const texts = Array.from(treeSVG.querySelectorAll('text')); texts.forEach(t=>{ if(t.textContent==id) t.previousSibling.style.stroke = '#f97316'; }); }
+
+    // defaults
+    arrInput.value = '5 2 4 7 1 3 6 8'; buildArr.click();
+    treeInput.value = '8\n1 2\n1 3\n2 4\n2 5\n3 6\n2 7\n7 8';
+    document.getElementById('buildTree').click();
+  </script>
+</body>
+</html>
