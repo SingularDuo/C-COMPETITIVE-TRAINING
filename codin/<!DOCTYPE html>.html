@@ -82,10 +82,8 @@
   </div>
 
   <script>
-    // helper
     const sleep = (ms)=> new Promise(r=>setTimeout(r, ms));
 
-    // ============ RMQ ============
     const arrInput = document.getElementById('arrInput');
     const buildArr = document.getElementById('buildArr');
     const animateBuildArr = document.getElementById('animateBuildArr');
@@ -172,7 +170,6 @@
       const out = queryRMQ(Math.min(L,R), Math.max(L,R));
       if(!out){ rmqResult.textContent='invalid'; return; }
       rmqResult.textContent = 'Min = ' + out.res + ` (used k=${out.k})`;
-      // highlight corresponding level boxes
       const levelBoxes = document.querySelectorAll('.level .box');
       levelBoxes.forEach(x=>x.classList.remove('selected'));
       const k = out.k; const leftIdx = Math.min(L,R)-1; const rightIdx = Math.max(L,R)-(1<<k);
@@ -187,9 +184,7 @@
       const K = lg[n]+1;
       st = Array.from({length:n}, ()=>Array(K).fill(null));
       renderLevels();
-      // fill level 0
       for(let i=0;i<n;i++){ st[i][0]=a[i]; renderLevels(); await sleep(160); }
-      // higher levels
       for(let j=1;j<K;j++){
         for(let i=0;i + (1<<j) <= n; i++){
           const left = st[i][j-1]; const right = st[i + (1<<(j-1))][j-1];
@@ -228,21 +223,17 @@
       }
       return {n:9, edges:[[1,2],[1,3],[2,4],[2,5],[3,6],[3,7],[4,8],[5,9]]};
     }
-
-    // build adjacency, parent, depth; assumes nodes labeled 1..n
     function buildAdj(n, edges){
       adj = {}; for(let i=1;i<=n;i++) adj[i]=[];
       edges.forEach(e=>{ const u=e[0], v=e[1]; if(!adj[u]) adj[u]=[]; if(!adj[v]) adj[v]=[]; adj[u].push(v); adj[v].push(u); });
       N=n; LOG = Math.ceil(Math.log2(Math.max(1,n)))+1;
       parent = {}; depth = {}; up = {}; nodesOrder=[];
-      // if node 1 doesn't exist in adjacency (disconnected), still try to run dfs from 1..n to gather nodes
       const visited = {};
       function dfsStart(root){
         if(visited[root]) return;
         dfsBL(root, root, 0);
       }
       for(let i=1;i<=n;i++) if(!visited[i] && adj[i]) dfsBL(i, i, 0);
-      // build up table: use parent computed (if root parent[root]=root)
       for(let v=1; v<=N; v++){ up[v]=Array(LOG).fill(1); up[v][0]=parent[v]===undefined? v : parent[v]; }
       for(let j=1;j<LOG;j++){
         for(let v=1;v<=N;v++){
@@ -252,7 +243,7 @@
     }
 
     function dfsBL(u,p,d){
-      if(depth[u]!==undefined) return; // already visited
+      if(depth[u]!==undefined) return;
       parent[u]=p; depth[u]=d; nodesOrder.push(u);
       const neigh = adj[u]||[];
       for(const v of neigh) if(v!==p) dfsBL(v,u,d+1);
@@ -268,7 +259,6 @@
         const row = layers[d]||[]; const count = row.length; const gap = Math.max(80, w / (count+1));
         for(let i=0;i<count;i++){ const x = Math.min(w-30, gap*(i+1)); const y = top + d*layerGap; positions[row[i]] = {x,y}; }
       }
-      // draw edges once
       const drawn = new Set();
       for(let u=1; u<=N; u++){
         for(const v of (adj[u]||[])){
@@ -282,7 +272,6 @@
           line.classList.add('edge'); treeSVG.appendChild(line);
         }
       }
-      // draw nodes
       for(let v=1; v<=N; v++){
         const p = positions[v] || {x: 30 + (v*40)%w, y: top + ((v%5)+1)*40};
         const g = document.createElementNS('http://www.w3.org/2000/svg','g'); g.style.cursor='pointer';
@@ -316,7 +305,6 @@
       return u;
     }
 
-    // Binary-lifting LCA (non-animated)
     function lca(u,v){
       if(depth[u] < depth[v]) [u,v]=[v,u];
       u = jump(u, depth[u]-depth[v]);
@@ -325,26 +313,21 @@
       return parent[u];
     }
 
-    // Animated LCA: show explicit bit-by-bit jumps (leveling then ascend)
     async function animateLCAProcess(uOrig, vOrig){
       if(!up || Object.keys(up).length===0){ alert('Xây up table trước (Build Tree hoặc Animate BL Build)'); return; }
       let u = uOrig, v = vOrig;
-      // reset styles
       treeSVG.querySelectorAll('circle').forEach(c=>c.style.stroke='#2dd4bf');
       upTableWrap.querySelectorAll('td').forEach(td=>td.classList.remove('animating'));
       lcaResult.textContent = '';
 
-      // ensure exist
       if(depth[u]===undefined || depth[v]===undefined){ alert('Node không tồn tại trong cây'); return; }
 
       if(depth[u] < depth[v]) [u,v]=[v,u];
       let diff = depth[u] - depth[v];
 
       lcaResult.textContent = `Leveling: bring node ${uOrig} up by ${diff} steps`;
-      // go through bits from high to low so animation matches typical code
       for(let i=LOG-1;i>=0;i--){
         if((diff >> i) & 1){
-          // highlight the up[u][i] cell and the node u
           const cell = upTableWrap.querySelector(`tbody tr:nth-child(${u}) td:nth-child(${i+2})`);
           if(cell) cell.classList.add('animating');
           highlightNodeVisual(u, '#f97316');
@@ -394,15 +377,11 @@
     }
 
     function highlightNodeVisual(id, color){ const texts = Array.from(treeSVG.querySelectorAll('text')); texts.forEach(t=>{ if(Number(t.textContent)===id){ t.previousSibling.style.stroke = color; } }); }
-
-    // animate build of up table (visual)
     async function animateBuildUp(n, edges){
-      buildAdj(n, edges); // sets parent/depth
-      // init up with nulls
+      buildAdj(n, edges);
       for(let v=1; v<=N; v++) up[v]=Array(LOG).fill(null);
       for(let v=1; v<=N; v++) up[v][0] = parent[v]===undefined? v : parent[v];
       renderUpTable();
-      // fill higher j with animation
       for(let j=1;j<LOG;j++){
         for(let v=1; v<=N; v++){
           const mid = up[v][j-1];
@@ -416,8 +395,6 @@
         }
       }
     }
-
-    // UI: load tree from textbox
     try{
       loadTreeBtn.addEventListener('click', ()=>{
         const text = treeInput.value.trim();
@@ -431,8 +408,6 @@
         lcaResult.textContent='Loaded custom tree';
       });
     }catch(e){ /* ignore */ }
-
-    // sample build & animate buttons
     buildTreeBtn.addEventListener('click', ()=>{
       const s = sampleGraphs(sampleTree.value);
       buildAdj(s.n, s.edges);
@@ -468,8 +443,6 @@
       x=v; while(x!==anc){ highlightNode(x); x = parent[x]; if(x===undefined) break; }
     }
     function highlightNode(id){ const texts = Array.from(treeSVG.querySelectorAll('text')); texts.forEach(t=>{ if(t.textContent==id) t.previousSibling.style.stroke = '#f97316'; }); }
-
-    // defaults
     arrInput.value = '5 2 4 7 1 3 6 8'; buildArr.click();
     treeInput.value = '8\n1 2\n1 3\n2 4\n2 5\n3 6\n2 7\n7 8';
     document.getElementById('buildTree').click();
